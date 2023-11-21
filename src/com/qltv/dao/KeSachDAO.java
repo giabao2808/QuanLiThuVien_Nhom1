@@ -4,8 +4,12 @@
  */
 package com.qltv.dao;
 
+import static com.qltv.dao.KeSachDAO.DELETE_SQL;
+import static com.qltv.dao.KeSachDAO.INSERT_SQL;
+import static com.qltv.dao.KeSachDAO.UPDATE_SQL;
 import com.qltv.entity.KeSach;
 import com.qltv.entity.LoaiSach;
+import com.qltv.entity.KeSach;
 import com.qltv.utils.XJdbc;
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,10 +22,25 @@ import java.util.List;
 public class KeSachDAO {
     
     public static ResultSet  rs;
-    public static String INSERT_SQL = "insert into KeSach (MaKe) values (?,?)";
-    public static String UPDATE_SQL = "update KeSach set MaKe = ? where MaKe = ?";
+    public static String INSERT_SQL = "insert into KeSach (ViTri) values (?)";
+    public static String UPDATE_SQL = "update KeSach set ViTri = ? where MaKe = ?";
     public static String DELETE_SQL = "delete from KeSach where MaKe = ?";
     public static String SELECT_ALL_SQL = "select * from KeSach";
+    
+    public void insert(KeSach entity){
+        XJdbc.update(INSERT_SQL, 
+                    entity.getVitri());
+    }
+    
+    public void update(KeSach entity){
+        XJdbc.update(UPDATE_SQL, 
+                    entity.getVitri(),
+                    entity.getMaKe());
+    }
+    
+    public void delete(int key) {
+        XJdbc.update(DELETE_SQL, key);
+    }
     
     public List<KeSach> selectAll(){
         return selectBySql(SELECT_ALL_SQL);

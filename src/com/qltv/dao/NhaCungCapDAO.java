@@ -20,7 +20,7 @@ public class NhaCungCapDAO {
     public static ResultSet rs;
     public static String INSERT_SQL = "insert into NhaCungCap (TenNCC) values (?)";
     public static String UPDATE_SQL = "update NhaCungCap set TenNCC = ? where MaNCC = ?";
-    public static String DELETE_SQL = "delete from NhaCungCap";
+    public static String DELETE_SQL = "delete from NhaCungCap where MaNCC = ?";
     public static String SELECT_ALL_SQL = "select * from NhaCungCap";
     
     public void insert(NhaCungCap entity){
@@ -32,6 +32,10 @@ public class NhaCungCapDAO {
         XJdbc.update(UPDATE_SQL, 
                     entity.getTenNCC(),
                     entity.getMaNCC());
+    }
+    
+    public void delete(int key) {
+        XJdbc.update(DELETE_SQL, key);
     }
     
     public List<NhaCungCap> selectAll(){

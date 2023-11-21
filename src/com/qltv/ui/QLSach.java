@@ -5,20 +5,83 @@
  */
 package com.qltv.ui;
 
+import com.qltv.dao.LoaiSachDAO;
+import com.qltv.dao.SachDAO;
+import com.qltv.entity.LoaiSach;
+import com.qltv.entity.NhaXuatBan;
+import com.qltv.entity.Sach;
+import com.qltv.utils.MsgBox;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author RAVEN
  */
 public class QLSach extends javax.swing.JPanel {
 
+    SachDAO sdao = new SachDAO();
+    LoaiSachDAO lsdao = new LoaiSachDAO();
     /**
      * Creates new form Form_1
      */
     public QLSach() {
         initComponents();
-        
+        this.fillTable();
+        this.fillComboBoxLoaiSach();
     }
 
+    private void fillTable() {
+        DefaultTableModel model = (DefaultTableModel) tblSach.getModel();
+        model.setRowCount(0);
+        try {
+            List<Sach> list = sdao.selectAll();
+            for (Sach dg : list) {
+                Object[] row = {
+                    dg.getMa(),
+                    dg.getTen(),
+                    dg.getMaLoai(),
+                    dg.getMaNXB(),
+                    dg.getMaTG(),
+                    dg.getNam(),
+                    dg.getSoluong(),
+                    dg.getMaKe(),
+                    dg.getHinh(),
+                    dg.getGhichu()
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            MsgBox.alert(this, "Lỗi truy vấn dữ liệu sách!");
+            e.printStackTrace();
+        }
+    }
+    
+    private void fillComboBoxLoaiSach() {
+        try {
+            DefaultComboBoxModel model = (DefaultComboBoxModel) combobox1.getModel();
+            model.removeAllElements();
+            Sach cd = (Sach) combobox1.getSelectedItem();
+            System.out.println(cd);
+            if (cd != null) {
+                List<LoaiSach> list = lsdao.selectAll();
+                for (LoaiSach kh : list) {
+                    model.addElement(kh);
+                    
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+//    private void clickTable(){
+//        int i = tblSach.getSelectedRow();
+//        if(i > -1){
+//            txt.setText(tblSach.getValueAt(i, 1));
+//            
+//        }
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,7 +114,7 @@ public class QLSach extends javax.swing.JPanel {
         button3 = new com.qltv.swing.Button();
         button4 = new com.qltv.swing.Button();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblSach = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -120,6 +183,11 @@ public class QLSach extends javax.swing.JPanel {
 
         combobox1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         combobox1.setLabeText("Loại sách");
+        combobox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                combobox1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(combobox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 150, 270, -1));
 
         combobox2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -163,20 +231,33 @@ public class QLSach extends javax.swing.JPanel {
         jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Times New Roman", 0, 14), new java.awt.Color(153, 102, 0))); // NOI18N
         jScrollPane2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblSach.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã sách", "Tên sách", "Mã loại", "Mã NXB", "Mã tác giả", "Năm xuất bản", "Số lượng", "Mã kệ", "Hình ảnh", "Ghi chú"
             }
-        ));
-        jTable2.setGridColor(new java.awt.Color(255, 255, 255));
-        jTable2.setSelectionBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane2.setViewportView(jTable2);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, true, true, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblSach.setGridColor(new java.awt.Color(153, 153, 153));
+        tblSach.setSelectionBackground(new java.awt.Color(102, 102, 255));
+        tblSach.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSachMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblSach);
 
         jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 1020, 400));
 
@@ -202,6 +283,15 @@ public class QLSach extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtActionPerformed
 
+    private void tblSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSachMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblSachMouseClicked
+
+    private void combobox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox1ActionPerformed
+        // TODO add your handling code here:
+        fillComboBoxLoaiSach();
+    }//GEN-LAST:event_combobox1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.qltv.swing.Button button1;
@@ -223,7 +313,7 @@ public class QLSach extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable tblSach;
     private com.qltv.swing.TextField textField1;
     private com.qltv.swing.TextField textField3;
     private com.qltv.swing.TextField textField4;

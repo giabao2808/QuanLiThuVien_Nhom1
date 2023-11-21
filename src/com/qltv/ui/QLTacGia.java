@@ -5,19 +5,47 @@
  */
 package com.qltv.ui;
 
+import com.qltv.dao.TacGiaDAO;
+import com.qltv.entity.TacGia;
+import com.qltv.utils.MsgBox;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author RAVEN
  */
 public class QLTacGia extends javax.swing.JPanel {
 
+    TacGiaDAO tgdao = new TacGiaDAO();
     /**
      * Creates new form Form_1
      */
     public QLTacGia() {
         initComponents();
+        this.fillTable();
     }
 
+    public void fillTable(){
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        model.setRowCount(0);
+        try{
+            List<TacGia> list = tgdao.SelectAll();
+            for (TacGia dg : list) {
+                Object[] row = {
+                    dg.getMa(),
+                    dg.getTen(),
+                    dg.getNamsinh(),
+                    dg.getQuequan()
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            MsgBox.alert(this, "Lỗi truy vấn dữ liệu sách!");
+            e.printStackTrace();
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

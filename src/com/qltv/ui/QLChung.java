@@ -11,7 +11,9 @@ import com.qltv.entity.DocGia;
 import com.qltv.entity.KeSach;
 import com.qltv.entity.LoaiSach;
 import com.qltv.entity.NhaCungCap;
+import com.qltv.entity.NhaXuatBan;
 import com.qltv.utils.MsgBox;
+import com.qltv.utils.XImage;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,6 +26,7 @@ public class QLChung extends javax.swing.JPanel {
     LoaiSachDAO lsdao = new LoaiSachDAO();
     KeSachDAO ksdao = new KeSachDAO();
     NhaCungCapDAO nccdao = new NhaCungCapDAO();
+    int i = -1;
     /**
      * Creates new form QLChung
      */
@@ -34,7 +37,7 @@ public class QLChung extends javax.swing.JPanel {
         this.fillTableNCC();
     }
 
-    
+    //LOẠI SÁCH
     private void fillTableLoai() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
@@ -48,7 +51,7 @@ public class QLChung extends javax.swing.JPanel {
                 model.addRow(row);
             }
         } catch (Exception e) {
-            MsgBox.alert(this, "Lỗi truy vấn dữ liệu độc giả!");
+            MsgBox.alert(this, "Lỗi truy vấn dữ liệu loại sách!");
             e.printStackTrace();
         }
     }
@@ -60,6 +63,44 @@ public class QLChung extends javax.swing.JPanel {
         }
     }
     
+    private void insertLS(){
+        LoaiSach ls = this.getFormLS();
+        lsdao.insert(ls);
+        this.fillTableLoai();
+        this.clearFormLS();
+        MsgBox.alert(this, "Thêm loại sách thành công");
+    }
+    
+    private void updateLS(){
+        LoaiSach ks = this.getFormLS();
+        lsdao.update(ks);
+        this.fillTableLoai();
+        this.clearFormLS();
+        MsgBox.alert(this, "Cập nhật loại sách thành công");
+    }
+    
+    private void deleteLS() {
+        int c = jTable1.getSelectedRow();
+        int id = (int) jTable1.getValueAt(c, 0);
+        lsdao.delete(id);
+        this.fillTableLoai();
+        this.clearFormLS();
+        MsgBox.alert(this, "Xóa thành công");
+    }
+    
+        public void clearFormLS(){
+            textField1.setText("");
+    }
+    
+    private LoaiSach getFormLS(){
+        LoaiSach ls = new LoaiSach();
+        ls.setMaLoai((int) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+        ls.setTenLoai(textField1.getText());
+        return ls;
+    }
+    
+    
+    //KỆ SÁCH
     public void fillTableKeSach(){
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
@@ -73,7 +114,7 @@ public class QLChung extends javax.swing.JPanel {
                 model.addRow(row);
             }
         } catch (Exception e) {
-            MsgBox.alert(this, "Lỗi truy vấn dữ liệu độc giả!");
+            MsgBox.alert(this, "Lỗi truy vấn dữ liệu kệ sách!");
             e.printStackTrace();
         }
     }
@@ -85,6 +126,44 @@ public class QLChung extends javax.swing.JPanel {
         }
     }
     
+    private void insertKS(){
+        KeSach ks = this.getFormKS();
+        ksdao.insert(ks);
+        this.fillTableKeSach();
+        this.clearFormKS();
+        MsgBox.alert(this, "Thêm kệ sách thành công");
+    }
+    
+    private void updateKS(){
+        KeSach ks = this.getFormKS();
+        ksdao.update(ks);
+        this.fillTableKeSach();
+        this.clearFormKS();
+        MsgBox.alert(this, "Cập nhật kệ sách thành công");
+    }
+    
+    private void deleteKS() {
+        int c = jTable2.getSelectedRow();
+        int id = (int) jTable2.getValueAt(c, 0);
+        ksdao.delete(id);
+        this.fillTableKeSach();
+        this.clearFormKS();
+        MsgBox.alert(this, "Xóa thành công");
+    }
+    
+        public void clearFormKS(){
+            textField2.setText("");
+    }
+    
+    private KeSach getFormKS(){
+        KeSach ncc = new KeSach();
+        ncc.setMaKe((int) jTable2.getValueAt(jTable2.getSelectedRow(), 0));
+        ncc.setVitri(textField2.getText());
+        return ncc;
+    }
+     
+    
+    //NHÀ CUNG CẤP
     public void fillTableNCC(){
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
         model.setRowCount(0);
@@ -98,7 +177,7 @@ public class QLChung extends javax.swing.JPanel {
                 model.addRow(row);
             }
         } catch (Exception e) {
-            MsgBox.alert(this, "Lỗi truy vấn dữ liệu độc giả!");
+            MsgBox.alert(this, "Lỗi truy vấn dữ liệu nhà cung cấp!");
             e.printStackTrace();
         }
     }
@@ -114,6 +193,7 @@ public class QLChung extends javax.swing.JPanel {
         NhaCungCap ncc = this.getFormNCC();
         nccdao.insert(ncc);
         this.fillTableNCC();
+        this.clearFormNCC();
         MsgBox.alert(this, "Thêm nhà cung cấp thành công");
     }
     
@@ -121,11 +201,26 @@ public class QLChung extends javax.swing.JPanel {
         NhaCungCap ncc = this.getFormNCC();
         nccdao.update(ncc);
         this.fillTableNCC();
+        this.clearFormNCC();
         MsgBox.alert(this, "Cập nhật nhà cung cấp thành công");
+    }
+    
+    private void deleteNCC() {
+        int c = jTable3.getSelectedRow();
+        int id = (int) jTable3.getValueAt(c, 0);
+        nccdao.delete(id);
+        this.fillTableNCC();
+        this.clearFormNCC();
+        MsgBox.alert(this, "Xóa thành công");
+    }
+    
+        public void clearFormNCC(){
+            textField3.setText("");
     }
     
     private NhaCungCap getFormNCC(){
         NhaCungCap ncc = new NhaCungCap();
+        ncc.setMaNCC((int) jTable3.getValueAt(jTable3.getSelectedRow(), 0));
         ncc.setTenNCC(textField3.getText());
         return ncc;
     }
@@ -196,7 +291,15 @@ public class QLChung extends javax.swing.JPanel {
             new String [] {
                 "Mã loại", "Tên loại"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -209,21 +312,41 @@ public class QLChung extends javax.swing.JPanel {
         button1.setText("Thêm");
         button1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button1.setPreferredSize(new java.awt.Dimension(90, 50));
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 200, -1, -1));
 
         button2.setText("Cập nhật");
         button2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button2.setPreferredSize(new java.awt.Dimension(90, 50));
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(463, 200, -1, -1));
 
         button3.setText("Xóa");
         button3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button3.setPreferredSize(new java.awt.Dimension(90, 50));
+        button3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(button3, new org.netbeans.lib.awtextra.AbsoluteConstraints(586, 200, -1, -1));
 
         button4.setText("Mới");
         button4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button4.setPreferredSize(new java.awt.Dimension(90, 50));
+        button4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button4ActionPerformed(evt);
+            }
+        });
         jPanel1.add(button4, new org.netbeans.lib.awtextra.AbsoluteConstraints(708, 200, -1, -1));
 
         jTabbedPane1.addTab(" LOẠI SÁCH", jPanel1);
@@ -271,21 +394,41 @@ public class QLChung extends javax.swing.JPanel {
         button5.setText("Thêm");
         button5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button5.setPreferredSize(new java.awt.Dimension(90, 50));
+        button5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button5ActionPerformed(evt);
+            }
+        });
         jPanel4.add(button5, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 200, -1, -1));
 
         button6.setText("Cập nhật");
         button6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button6.setPreferredSize(new java.awt.Dimension(90, 50));
+        button6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button6ActionPerformed(evt);
+            }
+        });
         jPanel4.add(button6, new org.netbeans.lib.awtextra.AbsoluteConstraints(463, 200, -1, -1));
 
         button7.setText("Xóa");
         button7.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button7.setPreferredSize(new java.awt.Dimension(90, 50));
+        button7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button7ActionPerformed(evt);
+            }
+        });
         jPanel4.add(button7, new org.netbeans.lib.awtextra.AbsoluteConstraints(586, 200, -1, -1));
 
         button8.setText("Mới");
         button8.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button8.setPreferredSize(new java.awt.Dimension(90, 50));
+        button8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button8ActionPerformed(evt);
+            }
+        });
         jPanel4.add(button8, new org.netbeans.lib.awtextra.AbsoluteConstraints(708, 200, -1, -1));
 
         jTabbedPane1.addTab("KỆ SÁCH", jPanel4);
@@ -353,11 +496,21 @@ public class QLChung extends javax.swing.JPanel {
         button11.setText("Xóa");
         button11.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button11.setPreferredSize(new java.awt.Dimension(90, 50));
+        button11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button11ActionPerformed(evt);
+            }
+        });
         jPanel5.add(button11, new org.netbeans.lib.awtextra.AbsoluteConstraints(586, 200, -1, -1));
 
         button12.setText("Mới");
         button12.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button12.setPreferredSize(new java.awt.Dimension(90, 50));
+        button12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button12ActionPerformed(evt);
+            }
+        });
         jPanel5.add(button12, new org.netbeans.lib.awtextra.AbsoluteConstraints(708, 200, -1, -1));
 
         jTabbedPane1.addTab("NHÀ CUNG CẤP", jPanel5);
@@ -419,6 +572,56 @@ public class QLChung extends javax.swing.JPanel {
         // TODO add your handling code here:
         updateNCC();
     }//GEN-LAST:event_button10ActionPerformed
+
+    private void button11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button11ActionPerformed
+        // TODO add your handling code here:
+        deleteNCC();
+    }//GEN-LAST:event_button11ActionPerformed
+
+    private void button12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button12ActionPerformed
+        // TODO add your handling code here:
+        clearFormNCC();
+    }//GEN-LAST:event_button12ActionPerformed
+
+    private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
+        // TODO add your handling code here:
+        insertKS();
+    }//GEN-LAST:event_button5ActionPerformed
+
+    private void button6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button6ActionPerformed
+        // TODO add your handling code here:
+        updateKS();
+    }//GEN-LAST:event_button6ActionPerformed
+
+    private void button7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button7ActionPerformed
+        // TODO add your handling code here:
+        deleteKS();
+    }//GEN-LAST:event_button7ActionPerformed
+
+    private void button8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button8ActionPerformed
+        // TODO add your handling code here:
+        clearFormKS();
+    }//GEN-LAST:event_button8ActionPerformed
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        // TODO add your handling code here:
+        insertLS();
+    }//GEN-LAST:event_button1ActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        // TODO add your handling code here:
+        updateLS();
+    }//GEN-LAST:event_button2ActionPerformed
+
+    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
+        // TODO add your handling code here:
+        deleteLS();
+    }//GEN-LAST:event_button3ActionPerformed
+
+    private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
+        // TODO add your handling code here:
+        clearFormLS();
+    }//GEN-LAST:event_button4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

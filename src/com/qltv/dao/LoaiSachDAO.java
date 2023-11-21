@@ -3,12 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.qltv.dao;
+import static com.qltv.dao.KeSachDAO.DELETE_SQL;
+import static com.qltv.dao.KeSachDAO.INSERT_SQL;
+import static com.qltv.dao.KeSachDAO.UPDATE_SQL;
 import static com.qltv.dao.NhaXuatBanDAO.DELETE_SQL;
 import static com.qltv.dao.NhaXuatBanDAO.INSERT_SQL;
 import static com.qltv.dao.NhaXuatBanDAO.SELECT_ALL_SQL;
 import static com.qltv.dao.NhaXuatBanDAO.SELECT_BY_ID_SQL;
 import static com.qltv.dao.NhaXuatBanDAO.UPDATE_SQL;
 import static com.qltv.dao.NhaXuatBanDAO.rs;
+import com.qltv.entity.KeSach;
 import com.qltv.entity.LoaiSach;
 import com.qltv.entity.NhaXuatBan;
 import com.qltv.utils.XJdbc;
@@ -23,31 +27,26 @@ import java.util.List;
  */
 public class LoaiSachDAO {
     public ResultSet rs;
-    public String INSERT_SQL = "insert into Loai(TenLoai) values (?,?)";
+    public String INSERT_SQL = "insert into Loai(TenLoai) values (?)";
     public String UPDATE_SQL = "update Loai set TenLoai = ? where MaLoai = ?";
     public String DELETE_SQL = "delete from Loai where MaLoai = ? ";
     public String SELECT_ALL = "select * from Loai";
     
-    public void insert(NhaXuatBan entity) {
-        XJdbc.update(INSERT_SQL,
-                entity.getTen(),
-                entity.getDiachi(),
-                entity.getSdt(),
-                entity.getHinh());
+    public void insert(LoaiSach entity){
+        XJdbc.update(INSERT_SQL, 
+                    entity.getTenLoai());
     }
-
-    public void update(NhaXuatBan entity) {
-        XJdbc.update(UPDATE_SQL,
-                entity.getTen(),
-                entity.getDiachi(),
-                entity.getSdt(),
-                entity.getHinh(),
-                entity.getMa());
+    
+    public void update(LoaiSach entity){
+        XJdbc.update(UPDATE_SQL, 
+                    entity.getTenLoai(),
+                    entity.getMaLoai());
     }
-
+    
     public void delete(int key) {
         XJdbc.update(DELETE_SQL, key);
     }
+    
 
     public List<LoaiSach> selectAll() {
         return selectBySql(SELECT_ALL);
@@ -81,4 +80,9 @@ public class LoaiSachDAO {
         }
         return list;
     }
+    
+//    public ArrayList<LoaiSach> selectByLoaiSach() {
+//        String sql= "Select * from Loai";
+//        return this.selectBySql(sql);
+//    }
 }

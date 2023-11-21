@@ -4,19 +4,125 @@
  */
 package com.qltv.ui;
 
+import com.qltv.dao.NhanVienDAO;
+import com.qltv.dao.TaiKhoanDAO;
+import com.qltv.entity.NhanVien;
+import com.qltv.entity.TaiKhoan;
+import com.qltv.utils.MsgBox;
+import com.qltv.utils.XDate;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
  */
 public class QLNhanVien extends javax.swing.JPanel {
 
+    NhanVienDAO nvdao = new NhanVienDAO();
+    TaiKhoanDAO tkdao = new TaiKhoanDAO();
     /**
      * Creates new form QLNhanVien
      */
     public QLNhanVien() {
         initComponents();
+        fillTableNV();
+        fillTableTaiKhoan();
     }
 
+    public void fillTableNV(){
+        DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
+        model.setRowCount(0);
+        try{
+            List<NhanVien> list = nvdao.selectAll();
+            for (NhanVien dg : list) {
+                Object[] row = {
+                    dg.getMa(),
+                    dg.getTen(),
+                    dg.getNam(),
+                    dg.isGiotinh() ? "Nữ" : "Nam",
+                    dg.getDiachi(),
+                    dg.getSdt()
+                };
+                model.addRow(row);
+                
+            }
+        } catch (Exception e) {
+            MsgBox.alert(this, "Lỗi truy vấn dữ liệu sách!");
+            e.printStackTrace();
+        }
+        
+    }
+    
+    public void fillTableTaiKhoan() {
+        DefaultTableModel modelSP = (DefaultTableModel) tblTaiKhoan.getModel();
+        modelSP.setRowCount(0);
+        jTabbedPane1.setSelectedIndex(1);
+        List<TaiKhoan> listSP = new ArrayList<>();
+        listSP = tkdao.SelectAll();
+        try {
+            for (TaiKhoan tv : listSP) {
+                Object[] rows = new Object[]{
+                    tv.getMatk(),
+                    tv.getUser(),
+                    tv.getPass(),
+                    tv.isQuyen() ? "Quản lý" : "Nhân viên",
+                    tv.getManv()
+                };
+                modelSP.addRow(rows);
+            }
+            
+        } catch (Exception e) {
+        }
+
+    }
+    
+    private void clickTable() {
+        int i = tblNhanVien.getSelectedRow();
+        if (i > -1) {
+            try {
+                txtMa.setText(tblNhanVien.getValueAt(i, 0) + "");
+                txtHoTen.setText(tblNhanVien.getValueAt(i, 1) + "");
+                txtNamSinh.setText(tblNhanVien.getValueAt(i, 2) + "");
+                if (String.valueOf(tblNhanVien.getValueAt(i, 3)) == "Nam") {
+                    rdoNam.setSelected(true);
+                } else if (String.valueOf(tblNhanVien.getValueAt(i, 3)).equals("Nữ")) {
+                    rdoNu.setSelected(true);
+                }
+                txtDiaChi.setText(tblNhanVien.getValueAt(i, 4) + "");
+                txtSDT.setText(tblNhanVien.getValueAt(i, 5) + "");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn chưa chọn vào bảng");
+        }
+
+    }
+    
+    private void clickTableTK() {
+        int i = tblTaiKhoan.getSelectedRow();
+        if (i > -1) {
+            try {
+                txtMaTK.setText(tblTaiKhoan.getValueAt(i, 0) + "");
+                txtUser.setText(tblTaiKhoan.getValueAt(i, 1) + "");
+                txtMatKhau.setText(tblTaiKhoan.getValueAt(i, 2) + "");
+                if (String.valueOf(tblTaiKhoan.getValueAt(i, 3)) == "Quản lý") {
+                    rdoQuanLy.setSelected(true);
+                } else if (String.valueOf(tblTaiKhoan.getValueAt(i, 3)).equals("Nhân viên")) {
+                    rdoNhanVien.setSelected(true);
+                }
+                txtMa.setText(tblTaiKhoan.getValueAt(i, 4) + "");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn chưa chọn vào bảng");
+        }
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,34 +132,36 @@ public class QLNhanVien extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         panelBorder1 = new com.qltv.swing.PanelBorder();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        textField1 = new com.qltv.swing.TextField();
-        textField2 = new com.qltv.swing.TextField();
-        textField3 = new com.qltv.swing.TextField();
-        textField4 = new com.qltv.swing.TextField();
+        txtMa = new com.qltv.swing.TextField();
+        txtHoTen = new com.qltv.swing.TextField();
+        txtNamSinh = new com.qltv.swing.TextField();
+        txtDiaChi = new com.qltv.swing.TextField();
         jLabel1 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        rdoNu = new javax.swing.JRadioButton();
+        rdoNam = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblNhanVien = new javax.swing.JTable();
         textField5 = new com.qltv.swing.TextField();
         button4 = new com.qltv.swing.Button();
         button1 = new com.qltv.swing.Button();
         button3 = new com.qltv.swing.Button();
         button2 = new com.qltv.swing.Button();
         jLabel2 = new javax.swing.JLabel();
-        textField6 = new com.qltv.swing.TextField();
+        txtSDT = new com.qltv.swing.TextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        textField7 = new com.qltv.swing.TextField();
-        textField8 = new com.qltv.swing.TextField();
-        textField9 = new com.qltv.swing.TextField();
+        txtMaTK = new com.qltv.swing.TextField();
+        txtUser = new com.qltv.swing.TextField();
+        txtMatKhau = new com.qltv.swing.TextField();
         jLabel5 = new javax.swing.JLabel();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        rdoQuanLy = new javax.swing.JRadioButton();
+        rdoNhanVien = new javax.swing.JRadioButton();
         button5 = new com.qltv.swing.Button();
         button6 = new com.qltv.swing.Button();
         button7 = new com.qltv.swing.Button();
@@ -61,7 +169,7 @@ public class QLNhanVien extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         textField10 = new com.qltv.swing.TextField();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tblTaiKhoan = new javax.swing.JTable();
 
         panelBorder1.setPreferredSize(new java.awt.Dimension(1100, 630));
 
@@ -74,59 +182,74 @@ public class QLNhanVien extends javax.swing.JPanel {
         jPanel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        textField1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        textField1.setLabelText("Mã nhân viên");
-        textField1.addActionListener(new java.awt.event.ActionListener() {
+        txtMa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtMa.setLabelText("Mã nhân viên");
+        txtMa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField1ActionPerformed(evt);
+                txtMaActionPerformed(evt);
             }
         });
-        jPanel1.add(textField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 273, -1));
+        jPanel1.add(txtMa, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 273, -1));
 
-        textField2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        textField2.setLabelText("Họ & tên");
-        jPanel1.add(textField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 273, -1));
+        txtHoTen.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtHoTen.setLabelText("Họ & tên");
+        jPanel1.add(txtHoTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 273, -1));
 
-        textField3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        textField3.setLabelText("Năm sinh");
-        jPanel1.add(textField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 273, -1));
+        txtNamSinh.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtNamSinh.setLabelText("Năm sinh");
+        jPanel1.add(txtNamSinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 273, -1));
 
-        textField4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        textField4.setLabelText("Địa chỉ");
-        textField4.addActionListener(new java.awt.event.ActionListener() {
+        txtDiaChi.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtDiaChi.setLabelText("Địa chỉ");
+        txtDiaChi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField4ActionPerformed(evt);
+                txtDiaChiActionPerformed(evt);
             }
         });
-        jPanel1.add(textField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 320, 273, -1));
+        jPanel1.add(txtDiaChi, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 320, 273, -1));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(153, 153, 153));
         jLabel1.setText("Giới tính");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 460, -1, -1));
 
-        jRadioButton1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jRadioButton1.setForeground(new java.awt.Color(153, 153, 153));
-        jRadioButton1.setText("Nữ");
-        jPanel1.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 490, -1, -1));
+        buttonGroup2.add(rdoNu);
+        rdoNu.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rdoNu.setForeground(new java.awt.Color(153, 153, 153));
+        rdoNu.setText("Nữ");
+        jPanel1.add(rdoNu, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 490, -1, -1));
 
-        jRadioButton2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jRadioButton2.setForeground(new java.awt.Color(153, 153, 153));
-        jRadioButton2.setText("Nam");
-        jPanel1.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 490, -1, -1));
+        buttonGroup2.add(rdoNam);
+        rdoNam.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rdoNam.setForeground(new java.awt.Color(153, 153, 153));
+        rdoNam.setText("Nam");
+        jPanel1.add(rdoNam, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 490, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblNhanVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã nhân viên", "Tên nhân viên", "Năm sinh", "Giới tính", "Địa chỉ", "Số điện thoại"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblNhanVien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblNhanVienMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblNhanVien);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 140, 570, 370));
 
@@ -159,9 +282,9 @@ public class QLNhanVien extends javax.swing.JPanel {
         jLabel2.setText("NHÂN VIÊN");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, -1, -1));
 
-        textField6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        textField6.setLabelText("Số điện thoại");
-        jPanel1.add(textField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 390, 270, -1));
+        txtSDT.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtSDT.setLabelText("Số điện thoại");
+        jPanel1.add(txtSDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 390, 270, -1));
 
         jTabbedPane1.addTab("NHÂN VIÊN", jPanel1);
 
@@ -178,29 +301,31 @@ public class QLNhanVien extends javax.swing.JPanel {
         jLabel4.setText("Chức vụ:  Quản lý");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, -1, -1));
 
-        textField7.setLabelText("Mã tài khoản");
-        jPanel2.add(textField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 193, 268, -1));
+        txtMaTK.setLabelText("Mã tài khoản");
+        jPanel2.add(txtMaTK, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 193, 268, -1));
 
-        textField8.setLabelText("Tài khoản");
-        jPanel2.add(textField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 257, 268, -1));
+        txtUser.setLabelText("Tài khoản");
+        jPanel2.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 257, 268, -1));
 
-        textField9.setLabelText("Mật khẩu");
-        jPanel2.add(textField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 321, 268, -1));
+        txtMatKhau.setLabelText("Mật khẩu");
+        jPanel2.add(txtMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 321, 268, -1));
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(153, 153, 153));
         jLabel5.setText("Chức vụ");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 391, -1, -1));
 
-        jRadioButton3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jRadioButton3.setForeground(new java.awt.Color(153, 153, 153));
-        jRadioButton3.setText("Quản lý");
-        jPanel2.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 413, -1, -1));
+        buttonGroup1.add(rdoQuanLy);
+        rdoQuanLy.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        rdoQuanLy.setForeground(new java.awt.Color(153, 153, 153));
+        rdoQuanLy.setText("Quản lý");
+        jPanel2.add(rdoQuanLy, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 413, -1, -1));
 
-        jRadioButton4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jRadioButton4.setForeground(new java.awt.Color(153, 153, 153));
-        jRadioButton4.setText("Nhân viên");
-        jPanel2.add(jRadioButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 413, -1, -1));
+        buttonGroup1.add(rdoNhanVien);
+        rdoNhanVien.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        rdoNhanVien.setForeground(new java.awt.Color(153, 153, 153));
+        rdoNhanVien.setText("Nhân viên");
+        jPanel2.add(rdoNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 413, -1, -1));
 
         button5.setText("Mới");
         button5.setPreferredSize(new java.awt.Dimension(75, 45));
@@ -226,18 +351,31 @@ public class QLNhanVien extends javax.swing.JPanel {
         textField10.setLabelText("Tìm kiếm");
         jPanel2.add(textField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 50, 290, -1));
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tblTaiKhoan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã tài khoản", "Username", "Password", "Quyền", "Mã nhân viên"
             }
-        ));
-        jScrollPane3.setViewportView(jTable3);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblTaiKhoan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTaiKhoanMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tblTaiKhoan);
 
         jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 120, 580, 370));
 
@@ -270,13 +408,27 @@ public class QLNhanVien extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField4ActionPerformed
+    private void txtDiaChiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDiaChiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField4ActionPerformed
+    }//GEN-LAST:event_txtDiaChiActionPerformed
 
-    private void textField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField1ActionPerformed
+    private void txtMaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField1ActionPerformed
+    }//GEN-LAST:event_txtMaActionPerformed
+
+    private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
+        // TODO add your handling code here:
+        if(evt.getClickCount() == 2){
+            clickTable();
+        }
+    }//GEN-LAST:event_tblNhanVienMouseClicked
+
+    private void tblTaiKhoanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTaiKhoanMouseClicked
+        // TODO add your handling code here:
+        if(evt.getClickCount() == 2){
+            clickTableTK();
+        }
+    }//GEN-LAST:event_tblTaiKhoanMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -288,6 +440,8 @@ public class QLNhanVien extends javax.swing.JPanel {
     private com.qltv.swing.Button button6;
     private com.qltv.swing.Button button7;
     private com.qltv.swing.Button button8;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -296,25 +450,25 @@ public class QLNhanVien extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable3;
     private com.qltv.swing.PanelBorder panelBorder1;
-    private com.qltv.swing.TextField textField1;
+    private javax.swing.JRadioButton rdoNam;
+    private javax.swing.JRadioButton rdoNhanVien;
+    private javax.swing.JRadioButton rdoNu;
+    private javax.swing.JRadioButton rdoQuanLy;
+    private javax.swing.JTable tblNhanVien;
+    private javax.swing.JTable tblTaiKhoan;
     private com.qltv.swing.TextField textField10;
-    private com.qltv.swing.TextField textField2;
-    private com.qltv.swing.TextField textField3;
-    private com.qltv.swing.TextField textField4;
     private com.qltv.swing.TextField textField5;
-    private com.qltv.swing.TextField textField6;
-    private com.qltv.swing.TextField textField7;
-    private com.qltv.swing.TextField textField8;
-    private com.qltv.swing.TextField textField9;
+    private com.qltv.swing.TextField txtDiaChi;
+    private com.qltv.swing.TextField txtHoTen;
+    private com.qltv.swing.TextField txtMa;
+    private com.qltv.swing.TextField txtMaTK;
+    private com.qltv.swing.TextField txtMatKhau;
+    private com.qltv.swing.TextField txtNamSinh;
+    private com.qltv.swing.TextField txtSDT;
+    private com.qltv.swing.TextField txtUser;
     // End of variables declaration//GEN-END:variables
 }

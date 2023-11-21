@@ -97,23 +97,21 @@ public class QLNhaXuatBan extends javax.swing.JPanel {
     }
     
     public void clearForm(){
-//        this.setForm(new NhaXuatBan());
-//        this.i = -1;
+
+    
+    }
+    
+//    private void setForm(NhaXuatBan nxb) {
+//        txtTen.setText(nxb.getTen());
+//        txtDiaChi.setText(nxb.getDiachi());
+//        txtSDT.setText(nxb.getSdt());
+//        lblAnh.setIcon(XImage.readIconCD(null));
+//        if (nxb.getHinh() != null) {
+//            lblAnh.setToolTipText(nxb.getHinh());
+//            lblAnh.setIcon(XImage.readIconCD(nxb.getHinh()));
+//        }
 //        
-    
-    }
-    
-    private void setForm(NhaXuatBan nxb) {
-        txtTen.setText(nxb.getTen());
-        txtDiaChi.setText(nxb.getDiachi());
-        txtSDT.setText(nxb.getSdt());
-        lblAnh.setIcon(XImage.readIconCD(null));
-        if (nxb.getHinh() != null) {
-            lblAnh.setToolTipText(nxb.getHinh());
-            lblAnh.setIcon(XImage.readIconCD(nxb.getHinh()));
-        }
-        
-    }
+//    }
     
     private NhaXuatBan getForm() {
         NhaXuatBan nxb = new NhaXuatBan();
