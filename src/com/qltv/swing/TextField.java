@@ -157,10 +157,11 @@ public class TextField extends JTextField {
     }
 
     @Override
-    public void setText(String string) {
-        if (!getText().equals(string)) {
-            showing(string.equals(""));
+    public void setText(String s) {
+        
+        if (!getText().equals(s)) {
+            showing(s.equals(""));
         }
-        super.setText(string);
+        super.setText(s);
     }
 }

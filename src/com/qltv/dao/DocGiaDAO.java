@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author Admin
  */
-public class DocGiaDAO extends QuanLyThuVienDAO<DocGia, String>{
+public class DocGiaDAO{
     
 //        ResultSet rs;
 //        public static String SELECT_BY_ID_SQL = "SELECT * FROM DocGia WHERE MaDocGia=?";
@@ -147,12 +147,14 @@ public class DocGiaDAO extends QuanLyThuVienDAO<DocGia, String>{
 //        return list.get(0);
 //        
 //    }
-    public static ResultSet rs ; // Trả về kết quả truy vấn
-    public static String INSERT_SQL = "INSERT INTO DocGia (TenDocGia,GioiTinh,DiaChi,Sđt) VALUES (?,?,?,?)";
-    public static String UPDATE_SQL = "UPDATE DocGia SET TenDocGia=?,GioiTinh=?,DiaChi=?,Sđt=? WHERE MaDocGia=?";
+    public static ResultSet rs = null ; // Trả về kết quả truy vấn
+    public static String INSERT_SQL = "INSERT INTO DocGia (TenDocGia,GioiTinh,DiaChi,Sdt) VALUES (?,?,?,?)";
+    public static String UPDATE_SQL = "UPDATE DocGia SET TenDocGia=?,GioiTinh=?,DiaChi=?,Sdt=? WHERE MaDocGia=?";
     public static String DELETE_SQL = "DELETE FROM DocGia WHERE MaDocGia=?";
+    public static String DELETE_SQL_TTV = "DELETE FROM TheThuVien WHERE MaDocGia=?";
     public static String SELECT_ALL_SQL = "SELECT * FROM DocGia";
     public static String SELECT_BY_ID_SQL = "SELECT * FROM DocGia WHERE MaDocGia=?";
+    public static String SELECT_BY_NAME_SQL = "SELECT * FROM DocGia WHERE  TenDocGia like N'%' + N'?' + N'%' or Sdt like ?";
 
     public void insert(DocGia entity) {
         XJdbc.update(INSERT_SQL,
@@ -170,19 +172,16 @@ public class DocGiaDAO extends QuanLyThuVienDAO<DocGia, String>{
                 entity.getSoDT(),
                 entity.getMaDG());
     }
-
-    @Override
-    public void delete(String key) {
+    
+    public void delete(int key) {
         XJdbc.update(DELETE_SQL, key);
     }
-
-    @Override
+    
     public List<DocGia> selectAll() {
         return selectBySql(SELECT_ALL_SQL);
     }
 
-    @Override
-    public DocGia selectById(String id) {
+    public DocGia selectById(int id) {
         List<DocGia> list = selectBySql(SELECT_BY_ID_SQL, id);
         if(list.isEmpty()){
             return null;
@@ -191,31 +190,33 @@ public class DocGiaDAO extends QuanLyThuVienDAO<DocGia, String>{
         
     }
 
-    @Override
     protected ArrayList<DocGia> selectBySql(String sql, Object... args) {
         ArrayList<DocGia> list = new ArrayList<>();
         try {
             try {
-                rs = XJdbc.query(sql, args);
+                rs = XJdbc.query(sql);
                 while (rs.next()) {
-                    DocGia entity = new DocGia();
-                    entity.setMaDG(rs.getInt(1));
-                    entity.setTenDG(rs.getString(2));
-                    entity.setGioiTinh(rs.getBoolean(3));
-                    entity.setDiaChi(rs.getString(4));
-                    entity.setSoDT(rs.getString(5));
-                    list.add(entity);
+                    DocGia dg = new DocGia();
+                    dg.setMaDG(rs.getInt("MaDocGia"));
+                    dg.setTenDG(rs.getString("TenDocGia"));
+                    dg.setGioiTinh(rs.getBoolean("GioiTinh"));
+                    dg.setDiaChi(rs.getString("DiaChi"));
+                    dg.setSoDT(rs.getString("Sdt"));
+                    System.out.println(rs.getInt("MaDocGia"));
+                    list.add(dg);
                 }
             } finally {
                 rs.getStatement().getConnection().close();
             }
         } catch (SQLException ex) {
             System.out.println(ex);
-            throw new RuntimeException(ex);
+//            throw new RuntimeException(ex);
         }
         return list;
     }
-    //	public static ArrayList<DocGia> getdanhsachdocgia() {
+    
+    
+//    	public static ArrayList<DocGia> getdanhsachdocgia() {
 //		try {
 //			String sql = "select * from DocGia";
 //			Connection conn = XJdbc.getConnection();
@@ -244,4 +245,6 @@ public class DocGiaDAO extends QuanLyThuVienDAO<DocGia, String>{
 //		}
 //
 //	}
+
+    
 }

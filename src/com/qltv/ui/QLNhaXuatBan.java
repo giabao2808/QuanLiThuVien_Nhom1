@@ -4,19 +4,140 @@
  */
 package com.qltv.ui;
 
+import com.qltv.dao.NhaXuatBanDAO;
+import com.qltv.entity.DocGia;
+import com.qltv.entity.NhaXuatBan;
+import com.qltv.entity.TheThuVien;
+import com.qltv.utils.MsgBox;
+import com.qltv.utils.XImage;
+import java.io.File;
+import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
  */
 public class QLNhaXuatBan extends javax.swing.JPanel {
 
+    NhaXuatBanDAO nxbdao = new NhaXuatBanDAO();
+    int i = -1;
     /**
      * Creates new form QLNhaXuatBan
      */
     public QLNhaXuatBan() {
         initComponents();
+        this.fillTable();
     }
 
+    private void fillTable() {
+        DefaultTableModel model = (DefaultTableModel) tblDSNXB.getModel();
+        model.setRowCount(0);
+        try {
+            List<NhaXuatBan> list = nxbdao.selectAll();
+            for (NhaXuatBan dg : list) {
+                Object[] row = {
+                    dg.getMa(),
+                    dg.getTen(),
+                    dg.getDiachi(),
+                    dg.getSdt(),
+                    dg.getHinh()
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            MsgBox.alert(this, "Lỗi truy vấn dữ liệu độc giả!");
+            e.printStackTrace();
+        }
+    }
+    
+    public void clickTableNXB(){
+        int i = tblDSNXB.getSelectedRow();
+        if(i > -1){
+            txtTen.setText((String) tblDSNXB.getValueAt(i, 1));
+            txtDiaChi.setText((String) tblDSNXB.getValueAt(i, 2));
+            txtSDT.setText((String) tblDSNXB.getValueAt(i, 3));
+            lblAnh.setIcon(XImage.readIconCD("NoImage.png"));
+        if (tblDSNXB.getValueAt(i, 4) != null) {
+            lblAnh.setToolTipText((String) tblDSNXB.getValueAt(i, 4));
+            lblAnh.setIcon(XImage.readIconCD((String) tblDSNXB.getValueAt(i, 4)));
+        }
+        }
+    }
+    
+    public void insert(){
+        NhaXuatBan n = this.getForm();
+        nxbdao.insert(n);
+        this.fillTable();
+        MsgBox.alert(this, "Thêm nhà xuất bản thành công!");
+    }
+    
+       public void updateNXB(){
+           try{
+        NhaXuatBan n = this.getForm();
+        System.out.println(n.toString());
+        nxbdao.update(n);
+        MsgBox.alert(this, "Cập nhật nhà xuất bản thành công!");
+        this.fillTable();
+           }catch(Exception e){
+               e.printStackTrace();
+           }
+    }
+    
+    private void delete() {
+        int c = tblDSNXB.getSelectedRow();
+        int id = (int) tblDSNXB.getValueAt(c, 0);
+        nxbdao.delete(id);
+        this.fillTable();
+        MsgBox.alert(this, "Xóa nhà xuất bản thành công");
+    }
+    
+    public void clearForm(){
+//        this.setForm(new NhaXuatBan());
+//        this.i = -1;
+//        
+    
+    }
+    
+    private void setForm(NhaXuatBan nxb) {
+        txtTen.setText(nxb.getTen());
+        txtDiaChi.setText(nxb.getDiachi());
+        txtSDT.setText(nxb.getSdt());
+        lblAnh.setIcon(XImage.readIconCD(null));
+        if (nxb.getHinh() != null) {
+            lblAnh.setToolTipText(nxb.getHinh());
+            lblAnh.setIcon(XImage.readIconCD(nxb.getHinh()));
+        }
+        
+    }
+    
+    private NhaXuatBan getForm() {
+        NhaXuatBan nxb = new NhaXuatBan();
+        nxb.setTen(txtTen.getText());
+        nxb.setDiachi(txtDiaChi.getText());
+        nxb.setSdt(txtSDT.getText());
+        nxb.setHinh(lblAnh.getToolTipText());
+        return nxb;
+    }
+    
+    private void selectIcon() {
+        JFileChooser fc = new JFileChooser("logos");
+        FileFilter filter = new FileNameExtensionFilter("Image Files", "gif", "jpeg", "jpg", "png");
+        fc.setFileFilter(filter);
+        fc.setMultiSelectionEnabled(false);
+        int kq = fc.showOpenDialog(fc);
+        if (kq == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            XImage.saveIconCD(file); // lưu hình vào thư mục logos
+            ImageIcon icon = XImage.readIconCD(file.getName()); // đọc hình từ logos
+            lblAnh.setIcon(icon);
+            lblAnh.setToolTipText(file.getName()); // giữ tên hình trong tooltip
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,81 +147,102 @@ public class QLNhaXuatBan extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        textField1 = new com.qltv.swing.TextField();
-        textField2 = new com.qltv.swing.TextField();
-        textField3 = new com.qltv.swing.TextField();
+        txtDiaChi = new com.qltv.swing.TextField();
+        txtSDT = new com.qltv.swing.TextField();
+        txtTen = new com.qltv.swing.TextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblDSNXB = new javax.swing.JTable();
         button1 = new com.qltv.swing.Button();
         button2 = new com.qltv.swing.Button();
         button3 = new com.qltv.swing.Button();
         button4 = new com.qltv.swing.Button();
         textField4 = new com.qltv.swing.TextField();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblAnh = new javax.swing.JLabel();
+        button5 = new com.qltv.swing.Button();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        textField1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        textField1.setLabelText("Địa chỉ");
-        add(textField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 270, 50));
+        txtDiaChi.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtDiaChi.setLabelText("Địa chỉ");
+        add(txtDiaChi, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 270, 50));
 
-        textField2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        textField2.setLabelText("Số điện thoại");
-        add(textField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 270, 270, 50));
+        txtSDT.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtSDT.setLabelText("Số điện thoại");
+        add(txtSDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 270, 270, 50));
 
-        textField3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        textField3.setLabelText("Tên nhà sản xuất");
-        textField3.addActionListener(new java.awt.event.ActionListener() {
+        txtTen.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtTen.setLabelText("Tên nhà sản xuất");
+        txtTen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField3ActionPerformed(evt);
+                txtTenActionPerformed(evt);
             }
         });
-        add(textField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 270, 50));
+        add(txtTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 270, 50));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblDSNXB.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Mã tác giả", "Tên tác giả", "Năm sinh", "Quê quán"
+                "Mã nhà xuất bản", "Tên nhà xuất bản", "Địa chỉ", "Số điện thoại", "Hình ảnh"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true, true
+                false, true, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        tblDSNXB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDSNXBMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblDSNXB);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, 410, 420));
 
         button1.setText("Cập nhật");
         button1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button1.setPreferredSize(new java.awt.Dimension(90, 50));
-        add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 440, -1, -1));
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+        add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 510, -1, -1));
 
         button2.setText("Mới");
         button2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button2.setPreferredSize(new java.awt.Dimension(90, 50));
-        add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 440, -1, -1));
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
+        add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 510, -1, -1));
 
         button3.setText("Xóa");
         button3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button3.setPreferredSize(new java.awt.Dimension(90, 50));
-        add(button3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 440, -1, -1));
+        button3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button3ActionPerformed(evt);
+            }
+        });
+        add(button3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 510, -1, -1));
 
-        button4.setText("Thêm");
+        button4.setText("Xóa ảnh");
         button4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button4.setPreferredSize(new java.awt.Dimension(90, 50));
-        add(button4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 440, -1, -1));
+        add(button4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 420, -1, -1));
 
         textField4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         textField4.setLabelText("Tìm kiếm");
@@ -116,18 +258,65 @@ public class QLNhaXuatBan extends javax.swing.JPanel {
         jLabel1.setText("NHÀ XUẤT BẢN");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, -1, -1));
 
-        jLabel2.setText("jLabel2");
-        jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 220, 280));
+        lblAnh.setText("jLabel2");
+        lblAnh.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lblAnh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblAnhMouseClicked(evt);
+            }
+        });
+        add(lblAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 220, 280));
+
+        button5.setText("Thêm");
+        button5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        button5.setPreferredSize(new java.awt.Dimension(90, 50));
+        button5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button5ActionPerformed(evt);
+            }
+        });
+        add(button5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 510, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField3ActionPerformed
+    private void txtTenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField3ActionPerformed
+    }//GEN-LAST:event_txtTenActionPerformed
 
     private void textField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textField4ActionPerformed
+
+    private void tblDSNXBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDSNXBMouseClicked
+        // TODO add your handling code here:
+        if(evt.getClickCount() == 2){
+            this.clickTableNXB();
+        }
+    }//GEN-LAST:event_tblDSNXBMouseClicked
+
+    private void lblAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnhMouseClicked
+        // TODO add your handling code here:
+        selectIcon();
+    }//GEN-LAST:event_lblAnhMouseClicked
+
+    private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
+        // TODO add your handling code here:
+        insert();
+    }//GEN-LAST:event_button5ActionPerformed
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        // TODO add your handling code here:
+        this.updateNXB();
+    }//GEN-LAST:event_button1ActionPerformed
+
+    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
+        // TODO add your handling code here:
+        this.delete();
+    }//GEN-LAST:event_button3ActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        // TODO add your handling code here:
+        this.clearForm();
+    }//GEN-LAST:event_button2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -135,13 +324,14 @@ public class QLNhaXuatBan extends javax.swing.JPanel {
     private com.qltv.swing.Button button2;
     private com.qltv.swing.Button button3;
     private com.qltv.swing.Button button4;
+    private com.qltv.swing.Button button5;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
-    private com.qltv.swing.TextField textField1;
-    private com.qltv.swing.TextField textField2;
-    private com.qltv.swing.TextField textField3;
+    private javax.swing.JLabel lblAnh;
+    private javax.swing.JTable tblDSNXB;
     private com.qltv.swing.TextField textField4;
+    private com.qltv.swing.TextField txtDiaChi;
+    private com.qltv.swing.TextField txtSDT;
+    private com.qltv.swing.TextField txtTen;
     // End of variables declaration//GEN-END:variables
 }

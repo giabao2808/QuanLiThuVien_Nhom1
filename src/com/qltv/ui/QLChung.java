@@ -4,19 +4,46 @@
  */
 package com.qltv.ui;
 
+import com.qltv.dao.LoaiSachDAO;
+import com.qltv.entity.DocGia;
+import com.qltv.entity.LoaiSach;
+import com.qltv.utils.MsgBox;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
  */
 public class QLChung extends javax.swing.JPanel {
 
+    LoaiSachDAO lsdao = new LoaiSachDAO();
     /**
      * Creates new form QLChung
      */
     public QLChung() {
         initComponents();
+        this.fillTableLoai();
     }
 
+    
+    private void fillTableLoai() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        try {
+            List<LoaiSach> list = lsdao.selectAll();
+            for (LoaiSach dg : list) {
+                Object[] row = {
+                    dg.getMaLoai(),
+                    dg.getTenLoai()
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            MsgBox.alert(this, "Lỗi truy vấn dữ liệu độc giả!");
+            e.printStackTrace();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -76,13 +103,13 @@ public class QLChung extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã loại", "Tên loại"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

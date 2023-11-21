@@ -18,16 +18,15 @@ import java.util.List;
  *
  * @author Admin
  */
-public class TheThuVienDAO extends QuanLyThuVienDAO<TheThuVien, String>{
-    
-    public static ResultSet rs = null; // Trả về kết quả truy vấn
+public class TheThuVienDAO{
+
+    public static ResultSet rs = null;
     public static String INSERT_SQL = "INSERT INTO TheThuVien (NgayBatDau, NgayKetThuc,GhiChu,MaDocGia) VALUES (?,?,?,?)";
-    public static String UPDATE_SQL = "UPDATE TheThuVien SET NgayBatDau=?,NgayKetThuc=?,GhiChu=?,MaDocGia=? WHERE MaDocGia=?";
-    public static String DELETE_SQL = "DELETE FROM TheThuVien WHERE MaDocGia=?";
+    public static String UPDATE_SQL = "UPDATE TheThuVien SET NgayBatDau=?,NgayKetThuc=?,GhiChu=?,MaDocGia=? WHERE MaTheThuVien=?";
+    public static String DELETE_SQL = "DELETE FROM TheThuVien WHERE MaTheThuVien=?";
     public static String SELECT_ALL_SQL = "SELECT * FROM TheThuVien";
     public static String SELECT_BY_ID_SQL = "SELECT * FROM TheThuVien WHERE MaDocGia=?";
 
-    @Override
     public void insert(TheThuVien entity) {
         XJdbc.update(INSERT_SQL,
                 entity.getNgayBatDau(),
@@ -36,33 +35,32 @@ public class TheThuVienDAO extends QuanLyThuVienDAO<TheThuVien, String>{
                 entity.getMadocgia());
     }
 
-    @Override
     public void update(TheThuVien entity) {
         XJdbc.update(UPDATE_SQL,
                  entity.getNgayBatDau(),
                 entity.getNgayKetThuc(),
                 entity.getGhiChu(),
                 entity.getMadocgia(),
-                entity.getMadocgia());
+                entity.getMaTheThuVien());
     }
 
-    @Override
-    public void delete(String key) {
+    public void delete(int key) {
         XJdbc.update(DELETE_SQL, key);
     }
     
-    @Override
     public List<TheThuVien> selectAll() {
         return selectBySql(SELECT_ALL_SQL);
     }
-    
-    @Override
-    public TheThuVien selectById(String key) {
-        List<TheThuVien> list = selectBySql(SELECT_BY_ID_SQL, key);
-        return list.size() > 0 ? list.get(0) : null;
+//    
+//    @Override
+public List<TheThuVien> selectByIds(int id) {
+        List<TheThuVien> list = this.selectBySql(SELECT_BY_ID_SQL, id);
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list;
     }
 
-    @Override
     protected List<TheThuVien> selectBySql(String sql, Object... args) {
         List<TheThuVien> list = new ArrayList<>();
         try {
@@ -75,6 +73,7 @@ public class TheThuVienDAO extends QuanLyThuVienDAO<TheThuVien, String>{
                     entity.setNgayKetThuc(rs.getDate(3));
                     entity.setGhiChu(rs.getString(4));
                     entity.setMadocgia(rs.getInt(5));
+                    System.out.println(rs.getDate(3));
                     list.add(entity);
                 }
             } finally {
@@ -85,18 +84,20 @@ public class TheThuVienDAO extends QuanLyThuVienDAO<TheThuVien, String>{
         }
         return list;
     }
+    
+    
 //    public static ArrayList<TheThuVien> getdanhsachTheThuVien() {
 //		try {
-//			String sql = "select * from TheThuVien";
-//			Connection conn = DriverManager.getConnection(com.qltv.utils.XJdbc.connUrl);
+//			String sql = "";
+//			Connection conn = XJdbc.getConnection();
 //			PreparedStatement stmt = conn.prepareStatement(sql);
 //			ResultSet rs = stmt.executeQuery();
 //			ArrayList<TheThuVien> dsl = new ArrayList<TheThuVien>();
 //			while (rs.next()) {
 //				TheThuVien tv = new TheThuVien();
 //				tv.setMaTheThuVien(rs.getInt("MaTheThuVien"));
-//				tv.setNgayBatDau(rs.getString("NgayBatDau"));
-//				tv.setNgayKetThuc(rs.getString("NgayKetThuc"));
+//				tv.setNgayBatDau(rs.getDate("NgayBatDau"));
+//				tv.setNgayKetThuc(rs.getDate("NgayKetThuc"));
 //				tv.setGhiChu(rs.getString("GhiChu"));
 //                                tv.setMadocgia(rs.getInt("MaDocGia"));
 //				dsl.add(tv);
@@ -109,6 +110,11 @@ public class TheThuVienDAO extends QuanLyThuVienDAO<TheThuVien, String>{
 //		}
 //
 //	}
+    
+    
+
+        
+    
 //
 //	public ArrayList<TheThuVien> getdanhsachthongtinTheThuVien() {
 //		try {
