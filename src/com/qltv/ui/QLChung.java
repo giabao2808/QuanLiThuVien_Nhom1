@@ -6,9 +6,11 @@ package com.qltv.ui;
 
 import com.qltv.dao.KeSachDAO;
 import com.qltv.dao.LoaiSachDAO;
+import com.qltv.dao.NhaCungCapDAO;
 import com.qltv.entity.DocGia;
 import com.qltv.entity.KeSach;
 import com.qltv.entity.LoaiSach;
+import com.qltv.entity.NhaCungCap;
 import com.qltv.utils.MsgBox;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -21,6 +23,7 @@ public class QLChung extends javax.swing.JPanel {
 
     LoaiSachDAO lsdao = new LoaiSachDAO();
     KeSachDAO ksdao = new KeSachDAO();
+    NhaCungCapDAO nccdao = new NhaCungCapDAO();
     /**
      * Creates new form QLChung
      */
@@ -28,6 +31,7 @@ public class QLChung extends javax.swing.JPanel {
         initComponents();
         this.fillTableLoai();
         this.fillTableKeSach();
+        this.fillTableNCC();
     }
 
     
@@ -49,6 +53,13 @@ public class QLChung extends javax.swing.JPanel {
         }
     }
     
+    private void clickTableLoai(){
+        int i = jTable1.getSelectedRow();
+        if(i > -1){
+            textField1.setText((String) jTable1.getValueAt(i, 1));
+        }
+    }
+    
     public void fillTableKeSach(){
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
@@ -67,15 +78,22 @@ public class QLChung extends javax.swing.JPanel {
         }
     }
     
+    private void clickTableKeSach(){
+        int i = jTable2.getSelectedRow();
+        if(i > -1){
+            textField2.setText((String) jTable2.getValueAt(i, 1));
+        }
+    }
+    
     public void fillTableNCC(){
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
         model.setRowCount(0);
         try{
-            List<KeSach> list = ksdao.selectAll();
-            for (KeSach dg : list) {
+            List<NhaCungCap> list = nccdao.selectAll();
+            for (NhaCungCap ncc : list) {
                 Object[] row = {
-                    dg.getMaKe(),
-                    dg.getVitri()
+                    ncc.getMaNCC(),
+                    ncc.getTenNCC()
                 };
                 model.addRow(row);
             }
@@ -85,7 +103,12 @@ public class QLChung extends javax.swing.JPanel {
         }
     }
     
-    
+    private void clickTableNCC(){
+        int i = jTable3.getSelectedRow();
+        if(i > -1){
+            textField3.setText((String) jTable3.getValueAt(i, 1));
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -154,6 +177,11 @@ public class QLChung extends javax.swing.JPanel {
                 "Mã loại", "Tên loại"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 275, 701, 319));
@@ -194,15 +222,28 @@ public class QLChung extends javax.swing.JPanel {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã kệ", "Vị trí"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
         jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 275, 701, 319));
@@ -243,15 +284,28 @@ public class QLChung extends javax.swing.JPanel {
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã nhà cung cấp", "Tên nhà cung cấp"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable3MouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTable3);
 
         jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 275, 701, 319));
@@ -304,6 +358,27 @@ public class QLChung extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        if(evt.getClickCount() == 2){
+        clickTableLoai();
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // TODO add your handling code here:
+        if(evt.getClickCount() == 2){
+            clickTableKeSach();
+        }
+    }//GEN-LAST:event_jTable2MouseClicked
+
+    private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
+        // TODO add your handling code here:
+        if(evt.getClickCount() == 2){
+            clickTableNCC();
+        }
+    }//GEN-LAST:event_jTable3MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
