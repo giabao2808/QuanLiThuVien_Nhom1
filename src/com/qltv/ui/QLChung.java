@@ -109,6 +109,26 @@ public class QLChung extends javax.swing.JPanel {
             textField3.setText((String) jTable3.getValueAt(i, 1));
         }
     }
+    
+    private void insertNCC(){
+        NhaCungCap ncc = this.getFormNCC();
+        nccdao.insert(ncc);
+        this.fillTableNCC();
+        MsgBox.alert(this, "Thêm nhà cung cấp thành công");
+    }
+    
+    private void updateNCC(){
+        NhaCungCap ncc = this.getFormNCC();
+        nccdao.update(ncc);
+        this.fillTableNCC();
+        MsgBox.alert(this, "Cập nhật nhà cung cấp thành công");
+    }
+    
+    private NhaCungCap getFormNCC(){
+        NhaCungCap ncc = new NhaCungCap();
+        ncc.setTenNCC(textField3.getText());
+        return ncc;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -313,11 +333,21 @@ public class QLChung extends javax.swing.JPanel {
         button9.setText("Thêm");
         button9.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button9.setPreferredSize(new java.awt.Dimension(90, 50));
+        button9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button9ActionPerformed(evt);
+            }
+        });
         jPanel5.add(button9, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 200, -1, -1));
 
         button10.setText("Cập nhật");
         button10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button10.setPreferredSize(new java.awt.Dimension(90, 50));
+        button10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button10ActionPerformed(evt);
+            }
+        });
         jPanel5.add(button10, new org.netbeans.lib.awtextra.AbsoluteConstraints(463, 200, -1, -1));
 
         button11.setText("Xóa");
@@ -379,6 +409,16 @@ public class QLChung extends javax.swing.JPanel {
             clickTableNCC();
         }
     }//GEN-LAST:event_jTable3MouseClicked
+
+    private void button9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button9ActionPerformed
+        // TODO add your handling code here:
+        insertNCC();
+    }//GEN-LAST:event_button9ActionPerformed
+
+    private void button10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button10ActionPerformed
+        // TODO add your handling code here:
+        updateNCC();
+    }//GEN-LAST:event_button10ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

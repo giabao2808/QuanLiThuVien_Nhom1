@@ -18,10 +18,21 @@ import java.util.List;
 public class NhaCungCapDAO {
     
     public static ResultSet rs;
-    public static String INSERT_SQL = "insert into NhaCungCap (TenNCC) values (?,?)";
+    public static String INSERT_SQL = "insert into NhaCungCap (TenNCC) values (?)";
     public static String UPDATE_SQL = "update NhaCungCap set TenNCC = ? where MaNCC = ?";
     public static String DELETE_SQL = "delete from NhaCungCap";
     public static String SELECT_ALL_SQL = "select * from NhaCungCap";
+    
+    public void insert(NhaCungCap entity){
+        XJdbc.update(INSERT_SQL, 
+                    entity.getTenNCC());
+    }
+    
+    public void update(NhaCungCap entity){
+        XJdbc.update(UPDATE_SQL, 
+                    entity.getTenNCC(),
+                    entity.getMaNCC());
+    }
     
     public List<NhaCungCap> selectAll(){
         return selectById(SELECT_ALL_SQL);
@@ -34,8 +45,8 @@ public class NhaCungCapDAO {
                 rs = XJdbc.query(sql);
                 while (rs.next()) {
                     NhaCungCap ncc = new NhaCungCap();
-                    ncc.setMaNCC(rs.getInt(1));
-                    ncc.setTenNCC(rs.getString(2));
+                    ncc.setMaNCC(rs.getInt("MaNCC"));
+                    ncc.setTenNCC(rs.getString("TenNCC"));
                     list.add(ncc);
                 }
             } finally {
@@ -48,4 +59,4 @@ public class NhaCungCapDAO {
         return list;
     }
     }
-}
+
