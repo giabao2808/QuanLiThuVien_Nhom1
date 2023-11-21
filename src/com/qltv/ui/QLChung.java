@@ -4,8 +4,10 @@
  */
 package com.qltv.ui;
 
+import com.qltv.dao.KeSachDAO;
 import com.qltv.dao.LoaiSachDAO;
 import com.qltv.entity.DocGia;
+import com.qltv.entity.KeSach;
 import com.qltv.entity.LoaiSach;
 import com.qltv.utils.MsgBox;
 import java.util.List;
@@ -18,12 +20,14 @@ import javax.swing.table.DefaultTableModel;
 public class QLChung extends javax.swing.JPanel {
 
     LoaiSachDAO lsdao = new LoaiSachDAO();
+    KeSachDAO ksdao = new KeSachDAO();
     /**
      * Creates new form QLChung
      */
     public QLChung() {
         initComponents();
         this.fillTableLoai();
+        this.fillTableKeSach();
     }
 
     
@@ -44,6 +48,44 @@ public class QLChung extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }
+    
+    public void fillTableKeSach(){
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        model.setRowCount(0);
+        try{
+            List<KeSach> list = ksdao.selectAll();
+            for (KeSach dg : list) {
+                Object[] row = {
+                    dg.getMaKe(),
+                    dg.getVitri()
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            MsgBox.alert(this, "Lỗi truy vấn dữ liệu độc giả!");
+            e.printStackTrace();
+        }
+    }
+    
+    public void fillTableNCC(){
+        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+        model.setRowCount(0);
+        try{
+            List<KeSach> list = ksdao.selectAll();
+            for (KeSach dg : list) {
+                Object[] row = {
+                    dg.getMaKe(),
+                    dg.getVitri()
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            MsgBox.alert(this, "Lỗi truy vấn dữ liệu độc giả!");
+            e.printStackTrace();
+        }
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
