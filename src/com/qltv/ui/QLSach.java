@@ -11,8 +11,10 @@ import com.qltv.entity.LoaiSach;
 import com.qltv.entity.NhaXuatBan;
 import com.qltv.entity.Sach;
 import com.qltv.utils.MsgBox;
+import com.qltv.utils.XDate;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -60,9 +62,9 @@ public class QLSach extends javax.swing.JPanel {
     
     private void fillComboBoxLoaiSach() {
         try {
-            DefaultComboBoxModel model = (DefaultComboBoxModel) combobox1.getModel();
+            DefaultComboBoxModel model = (DefaultComboBoxModel) cboLoai.getModel();
             model.removeAllElements();
-            Sach cd = (Sach) combobox1.getSelectedItem();
+            Sach cd = (Sach) cboLoai.getSelectedItem();
             System.out.println(cd);
             if (cd != null) {
                 List<LoaiSach> list = lsdao.selectAll();
@@ -74,6 +76,27 @@ public class QLSach extends javax.swing.JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    private void clickTableSach() {
+        int i = tblSach.getSelectedRow();
+        if (i > -1) {
+            try {
+                txtTen.setText(tblSach.getValueAt(i, 1) + "");
+                cboLoai.setSelectedItem(tblSach.getValueAt(i, 2));
+                cboNXB.setSelectedItem(tblSach.getValueAt(i, 3));
+                cboTacGia.setSelectedItem(tblSach.getValueAt(i, 4));
+                txtNam.setText(tblSach.getValueAt(i, 5) + "");
+                txtSoLuong.setText(tblSach.getValueAt(i,6 )+ "");
+                cboKeSach.setSelectedItem(tblSach.getValueAt(i, 7));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            jTabbedPane1.setSelectedIndex(0);
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn chưa chọnvào bảng");
+        }
+
     }
 //    private void clickTable(){
 //        int i = tblSach.getSelectedRow();
@@ -95,18 +118,18 @@ public class QLSach extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         button5 = new com.qltv.swing.Button();
-        txt = new com.qltv.swing.TextField();
-        textField3 = new com.qltv.swing.TextField();
-        textField4 = new com.qltv.swing.TextField();
+        txtTen = new com.qltv.swing.TextField();
+        txtNam = new com.qltv.swing.TextField();
+        txtSoLuong = new com.qltv.swing.TextField();
         button6 = new com.qltv.swing.Button();
         button7 = new com.qltv.swing.Button();
         button8 = new com.qltv.swing.Button();
         button9 = new com.qltv.swing.Button();
         jLabel1 = new javax.swing.JLabel();
-        combobox1 = new com.qltv.swing.Combobox();
-        combobox2 = new com.qltv.swing.Combobox();
-        combobox3 = new com.qltv.swing.Combobox();
-        combobox4 = new com.qltv.swing.Combobox();
+        cboLoai = new com.qltv.swing.Combobox();
+        cboNXB = new com.qltv.swing.Combobox();
+        cboKeSach = new com.qltv.swing.Combobox();
+        cboTacGia = new com.qltv.swing.Combobox();
         jPanel2 = new javax.swing.JPanel();
         textField1 = new com.qltv.swing.TextField();
         button1 = new com.qltv.swing.Button();
@@ -137,22 +160,22 @@ public class QLSach extends javax.swing.JPanel {
         button5.setPreferredSize(new java.awt.Dimension(90, 50));
         jPanel1.add(button5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 530, -1, -1));
 
-        txt.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        txt.setLabelText("Tên sách");
-        txt.addActionListener(new java.awt.event.ActionListener() {
+        txtTen.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtTen.setLabelText("Tên sách");
+        txtTen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtActionPerformed(evt);
+                txtTenActionPerformed(evt);
             }
         });
-        jPanel1.add(txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 80, 570, -1));
+        jPanel1.add(txtTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 80, 570, -1));
 
-        textField3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        textField3.setLabelText("Năm sản xuất");
-        jPanel1.add(textField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 230, 270, 40));
+        txtNam.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtNam.setLabelText("Năm sản xuất");
+        jPanel1.add(txtNam, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 230, 270, 40));
 
-        textField4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        textField4.setLabelText("Số lượng");
-        jPanel1.add(textField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 270, 40));
+        txtSoLuong.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtSoLuong.setLabelText("Số lượng");
+        jPanel1.add(txtSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 270, 40));
 
         button6.setText("Cập nhật");
         button6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -181,26 +204,26 @@ public class QLSach extends javax.swing.JPanel {
         jLabel1.setText("SÁCH");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, -1, -1));
 
-        combobox1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        combobox1.setLabeText("Loại sách");
-        combobox1.addActionListener(new java.awt.event.ActionListener() {
+        cboLoai.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        cboLoai.setLabeText("Loại sách");
+        cboLoai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                combobox1ActionPerformed(evt);
+                cboLoaiActionPerformed(evt);
             }
         });
-        jPanel1.add(combobox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 150, 270, -1));
+        jPanel1.add(cboLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 150, 270, -1));
 
-        combobox2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        combobox2.setLabeText("Nhà xuất bản");
-        jPanel1.add(combobox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 230, 270, 40));
+        cboNXB.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        cboNXB.setLabeText("Nhà xuất bản");
+        jPanel1.add(cboNXB, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 230, 270, 40));
 
-        combobox3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        combobox3.setLabeText("Kệ sách");
-        jPanel1.add(combobox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 310, 270, 40));
+        cboKeSach.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        cboKeSach.setLabeText("Kệ sách");
+        jPanel1.add(cboKeSach, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 310, 270, 40));
 
-        combobox4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        combobox4.setLabeText("Tác giả");
-        jPanel1.add(combobox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 150, 270, -1));
+        cboTacGia.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        cboTacGia.setLabeText("Tác giả");
+        jPanel1.add(cboTacGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 150, 270, -1));
 
         jTabbedPane1.addTab("THÔNG TIN", jPanel1);
 
@@ -279,18 +302,19 @@ public class QLSach extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtActionPerformed
+    private void txtTenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtActionPerformed
+    }//GEN-LAST:event_txtTenActionPerformed
 
     private void tblSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSachMouseClicked
         // TODO add your handling code here:
+        clickTableSach();
     }//GEN-LAST:event_tblSachMouseClicked
 
-    private void combobox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox1ActionPerformed
+    private void cboLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboLoaiActionPerformed
         // TODO add your handling code here:
         fillComboBoxLoaiSach();
-    }//GEN-LAST:event_combobox1ActionPerformed
+    }//GEN-LAST:event_cboLoaiActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -303,10 +327,10 @@ public class QLSach extends javax.swing.JPanel {
     private com.qltv.swing.Button button7;
     private com.qltv.swing.Button button8;
     private com.qltv.swing.Button button9;
-    private com.qltv.swing.Combobox combobox1;
-    private com.qltv.swing.Combobox combobox2;
-    private com.qltv.swing.Combobox combobox3;
-    private com.qltv.swing.Combobox combobox4;
+    private com.qltv.swing.Combobox cboKeSach;
+    private com.qltv.swing.Combobox cboLoai;
+    private com.qltv.swing.Combobox cboNXB;
+    private com.qltv.swing.Combobox cboTacGia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -315,8 +339,8 @@ public class QLSach extends javax.swing.JPanel {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable tblSach;
     private com.qltv.swing.TextField textField1;
-    private com.qltv.swing.TextField textField3;
-    private com.qltv.swing.TextField textField4;
-    private com.qltv.swing.TextField txt;
+    private com.qltv.swing.TextField txtNam;
+    private com.qltv.swing.TextField txtSoLuong;
+    private com.qltv.swing.TextField txtTen;
     // End of variables declaration//GEN-END:variables
 }

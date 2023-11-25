@@ -115,7 +115,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="com.qltv.swing.TextField" name="txt">
+            <Component class="com.qltv.swing.TextField" name="txtTen">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="18" style="0"/>
@@ -123,7 +123,7 @@
                 <Property name="labelText" type="java.lang.String" value="T&#xea;n s&#xe1;ch"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTenActionPerformed"/>
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -131,7 +131,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="com.qltv.swing.TextField" name="textField3">
+            <Component class="com.qltv.swing.TextField" name="txtNam">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="18" style="0"/>
@@ -144,7 +144,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="com.qltv.swing.TextField" name="textField4">
+            <Component class="com.qltv.swing.TextField" name="txtSoLuong">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="18" style="0"/>
@@ -239,7 +239,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="com.qltv.swing.Combobox" name="combobox1">
+            <Component class="com.qltv.swing.Combobox" name="cboLoai">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="18" style="0"/>
@@ -247,7 +247,7 @@
                 <Property name="labeText" type="java.lang.String" value="Lo&#x1ea1;i s&#xe1;ch"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="combobox1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboLoaiActionPerformed"/>
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -255,7 +255,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="com.qltv.swing.Combobox" name="combobox2">
+            <Component class="com.qltv.swing.Combobox" name="cboNXB">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="18" style="0"/>
@@ -268,7 +268,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="com.qltv.swing.Combobox" name="combobox3">
+            <Component class="com.qltv.swing.Combobox" name="cboKeSach">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="18" style="0"/>
@@ -281,7 +281,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="com.qltv.swing.Combobox" name="combobox4">
+            <Component class="com.qltv.swing.Combobox" name="cboTacGia">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="18" style="0"/>
