@@ -6,6 +6,7 @@
 package com.qltv.ui;
 
 import com.qltv.utils.Auth;
+import com.qltv.utils.MsgBox;
 
 /**
  *
@@ -18,8 +19,16 @@ public class Form_Home extends javax.swing.JPanel {
      */
     public Form_Home() {
         initComponents();
-        lblTen.setText("Tên đăng nhập: " + Auth.user.getUser());
-        lblChucVu.setText("Chức vụ: " + String.valueOf(Auth.user.isQuyen() ? "Nhân viên" : "Quản lý"));
+        init();
+    }
+    
+    void init(){
+        try{
+            lblTen.setText("Tên đăng nhập: " + Auth.user.getUser());
+            lblChucVu.setText("Chức vụ: " + String.valueOf(Auth.user.isQuyen() ? "Nhân viên" : "Quản lý"));
+        }catch(Exception e){
+            MsgBox.alert(this, "Bạn phải đăng nhập trước khi sử dụng!");
+        }
     }
 
     /**

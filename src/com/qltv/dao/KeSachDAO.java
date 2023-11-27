@@ -66,4 +66,29 @@ public class KeSachDAO {
         }
         return list;
     }
+    
+    public List<String> selectById() {
+        String SELECT_ID = "select ViTri from KeSach";
+        return selectByName( SELECT_ID);
+    }
+    
+    protected ArrayList<String> selectByName(String sql, Object... args) {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            try {
+                rs = XJdbc.query(sql);
+                while (rs.next()) {
+                    String tenLoai = rs.getString("ViTri");
+                    list.add(tenLoai);
+                                    }
+            } finally {
+                rs.getStatement().getConnection().close();
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+//            throw new RuntimeException(ex);
+        }
+        return list;
+    }
+    
 }

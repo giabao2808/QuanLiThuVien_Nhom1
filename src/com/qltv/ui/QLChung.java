@@ -14,6 +14,7 @@ import com.qltv.entity.NhaCungCap;
 import com.qltv.entity.NhaXuatBan;
 import com.qltv.utils.MsgBox;
 import com.qltv.utils.XImage;
+import com.qltv.utils.XValidate;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,9 +28,7 @@ public class QLChung extends javax.swing.JPanel {
     KeSachDAO ksdao = new KeSachDAO();
     NhaCungCapDAO nccdao = new NhaCungCapDAO();
     int i = -1;
-    /**
-     * Creates new form QLChung
-     */
+
     public QLChung() {
         initComponents();
         this.fillTableLoai();
@@ -37,9 +36,13 @@ public class QLChung extends javax.swing.JPanel {
         this.fillTableNCC();
     }
 
-    //LOẠI SÁCH
+    //--------------------------------------------------------------------------//
+    
+    // -----LOẠI SÁCH---- //
+    
+    // Đổ dữ liệu lên bảng
     private void fillTableLoai() {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblLoai.getModel();
         model.setRowCount(0);
         try {
             List<LoaiSach> list = lsdao.selectAll();
@@ -56,13 +59,15 @@ public class QLChung extends javax.swing.JPanel {
         }
     }
     
+    // Click vào bảng để hiện lên form
     private void clickTableLoai(){
-        int i = jTable1.getSelectedRow();
+        int i = tblLoai.getSelectedRow();
         if(i > -1){
-            textField1.setText((String) jTable1.getValueAt(i, 1));
+            txtLoai.setText((String) tblLoai.getValueAt(i, 1));
         }
     }
     
+    // Thêm
     private void insertLS(){
         LoaiSach ls = this.getFormLS();
         lsdao.insert(ls);
@@ -71,38 +76,50 @@ public class QLChung extends javax.swing.JPanel {
         MsgBox.alert(this, "Thêm loại sách thành công");
     }
     
+    // Cập nhật loại sách
     private void updateLS(){
-        LoaiSach ks = this.getFormLS();
-        lsdao.update(ks);
+        LoaiSach ls = this.getFormLS1();
+        lsdao.update(ls);
         this.fillTableLoai();
         this.clearFormLS();
         MsgBox.alert(this, "Cập nhật loại sách thành công");
     }
     
+    // Xóa
     private void deleteLS() {
-        int c = jTable1.getSelectedRow();
-        int id = (int) jTable1.getValueAt(c, 0);
+        int c = tblLoai.getSelectedRow();
+        int id = (int) tblLoai.getValueAt(c, 0);
         lsdao.delete(id);
         this.fillTableLoai();
         this.clearFormLS();
         MsgBox.alert(this, "Xóa thành công");
     }
     
+    // Làm mới
         public void clearFormLS(){
-            textField1.setText("");
+            txtLoai.setText("");
     }
     
+    // Lấy dữ liệu cho nút thêm
     private LoaiSach getFormLS(){
         LoaiSach ls = new LoaiSach();
-        ls.setMaLoai((int) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-        ls.setTenLoai(textField1.getText());
+        ls.setTenLoai(txtLoai.getText());
         return ls;
     }
     
+    // Lấy dữ liệu cho nút cập nhật
+    private LoaiSach getFormLS1(){
+        LoaiSach ls = new LoaiSach();
+        ls.setMaLoai((int) tblLoai.getValueAt(tblLoai.getSelectedRow(), 0));
+        ls.setTenLoai(txtLoai.getText());
+        return ls;
+    }
+        
+    // ---------------------------------KỆ SÁCH-------------------------------- //
     
-    //KỆ SÁCH
+    // Đổ dữ liệu lên bảng
     public void fillTableKeSach(){
-        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblKeSach.getModel();
         model.setRowCount(0);
         try{
             List<KeSach> list = ksdao.selectAll();
@@ -119,13 +136,15 @@ public class QLChung extends javax.swing.JPanel {
         }
     }
     
+    // Click vào bảng để hiện lên form
     private void clickTableKeSach(){
-        int i = jTable2.getSelectedRow();
+        int i = tblKeSach.getSelectedRow();
         if(i > -1){
-            textField2.setText((String) jTable2.getValueAt(i, 1));
+            txtKeSach.setText((String) tblKeSach.getValueAt(i, 1));
         }
     }
     
+    // Thêm
     private void insertKS(){
         KeSach ks = this.getFormKS();
         ksdao.insert(ks);
@@ -134,38 +153,51 @@ public class QLChung extends javax.swing.JPanel {
         MsgBox.alert(this, "Thêm kệ sách thành công");
     }
     
+    // Sửa
     private void updateKS(){
-        KeSach ks = this.getFormKS();
+        KeSach ks = this.getFormKS1();
         ksdao.update(ks);
         this.fillTableKeSach();
         this.clearFormKS();
         MsgBox.alert(this, "Cập nhật kệ sách thành công");
     }
     
+    // Xóa
     private void deleteKS() {
-        int c = jTable2.getSelectedRow();
-        int id = (int) jTable2.getValueAt(c, 0);
+        int c = tblKeSach.getSelectedRow();
+        int id = (int) tblKeSach.getValueAt(c, 0);
         ksdao.delete(id);
         this.fillTableKeSach();
         this.clearFormKS();
         MsgBox.alert(this, "Xóa thành công");
     }
     
+    // Làm mới
         public void clearFormKS(){
-            textField2.setText("");
+            txtKeSach.setText("");
     }
     
+    // Lấy dữ liệu cho nút thêm
     private KeSach getFormKS(){
-        KeSach ncc = new KeSach();
-        ncc.setMaKe((int) jTable2.getValueAt(jTable2.getSelectedRow(), 0));
-        ncc.setVitri(textField2.getText());
-        return ncc;
+        KeSach ks = new KeSach();
+        ks.setVitri(txtKeSach.getText());
+        return ks;
     }
      
+    // Lấy dữ liệu cho nút sửa
+    private KeSach getFormKS1(){
+        KeSach ks = new KeSach();
+        int maks = (int) tblKeSach.getValueAt(tblKeSach.getSelectedRow(), 0);
+        ks.setMaKe(maks);
+        ks.setVitri(txtKeSach.getText());
+        return ks;
+    }
     
-    //NHÀ CUNG CẤP
+    // ---------------------------------NHÀ CUNG CẤP-------------------------- //
+    
+    // Đổ dữ liệu lên bảng
     public void fillTableNCC(){
-        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblNCC.getModel();
         model.setRowCount(0);
         try{
             List<NhaCungCap> list = nccdao.selectAll();
@@ -182,13 +214,15 @@ public class QLChung extends javax.swing.JPanel {
         }
     }
     
+    // Click vào bảng để hiện lên form
     private void clickTableNCC(){
-        int i = jTable3.getSelectedRow();
+        int i = tblNCC.getSelectedRow();
         if(i > -1){
-            textField3.setText((String) jTable3.getValueAt(i, 1));
+            txtTenNCC.setText((String) tblNCC.getValueAt(i, 1));
         }
     }
     
+    // Thêm
     private void insertNCC(){
         NhaCungCap ncc = this.getFormNCC();
         nccdao.insert(ncc);
@@ -197,31 +231,42 @@ public class QLChung extends javax.swing.JPanel {
         MsgBox.alert(this, "Thêm nhà cung cấp thành công");
     }
     
+    // Sửa
     private void updateNCC(){
-        NhaCungCap ncc = this.getFormNCC();
+        NhaCungCap ncc = this.getFormNCC1();
         nccdao.update(ncc);
         this.fillTableNCC();
         this.clearFormNCC();
         MsgBox.alert(this, "Cập nhật nhà cung cấp thành công");
     }
     
+    // Xóa
     private void deleteNCC() {
-        int c = jTable3.getSelectedRow();
-        int id = (int) jTable3.getValueAt(c, 0);
+        int c = tblNCC.getSelectedRow();
+        int id = (int) tblNCC.getValueAt(c, 0);
         nccdao.delete(id);
         this.fillTableNCC();
         this.clearFormNCC();
         MsgBox.alert(this, "Xóa thành công");
     }
     
+    // Làm mới
         public void clearFormNCC(){
-            textField3.setText("");
+            txtTenNCC.setText("");
     }
     
+    // Lấy dữ liệu cho nút thêm
     private NhaCungCap getFormNCC(){
         NhaCungCap ncc = new NhaCungCap();
-        ncc.setMaNCC((int) jTable3.getValueAt(jTable3.getSelectedRow(), 0));
-        ncc.setTenNCC(textField3.getText());
+        ncc.setTenNCC(txtTenNCC.getText());
+        return ncc;
+    }
+        
+    // Lấy dữ liệu cho nút cập nhật
+    private NhaCungCap getFormNCC1(){
+        NhaCungCap ncc = new NhaCungCap();
+        ncc.setMaNCC((int) tblNCC.getValueAt(tblNCC.getSelectedRow(), 0));
+        ncc.setTenNCC(txtTenNCC.getText());
         return ncc;
     }
     /**
@@ -233,55 +278,56 @@ public class QLChung extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelBorder1 = new com.qltv.swing.PanelBorder();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        textField1 = new com.qltv.swing.TextField();
-        jLabel1 = new javax.swing.JLabel();
+        pnlChung = new com.qltv.swing.PanelBorder();
+        tabs = new javax.swing.JTabbedPane();
+        pnlLoaiSach = new javax.swing.JPanel();
+        txtLoai = new com.qltv.swing.TextField();
+        lblLoai = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        button1 = new com.qltv.swing.Button();
-        button2 = new com.qltv.swing.Button();
-        button3 = new com.qltv.swing.Button();
-        button4 = new com.qltv.swing.Button();
-        jPanel4 = new javax.swing.JPanel();
-        textField2 = new com.qltv.swing.TextField();
-        jLabel2 = new javax.swing.JLabel();
+        tblLoai = new javax.swing.JTable();
+        btnThemLS = new com.qltv.swing.Button();
+        btnSuaLS = new com.qltv.swing.Button();
+        btnXoaLS = new com.qltv.swing.Button();
+        btnMoiLS = new com.qltv.swing.Button();
+        pnlKeSach = new javax.swing.JPanel();
+        txtKeSach = new com.qltv.swing.TextField();
+        lblKeSach = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        button5 = new com.qltv.swing.Button();
-        button6 = new com.qltv.swing.Button();
-        button7 = new com.qltv.swing.Button();
-        button8 = new com.qltv.swing.Button();
-        jPanel5 = new javax.swing.JPanel();
-        textField3 = new com.qltv.swing.TextField();
-        jLabel3 = new javax.swing.JLabel();
+        tblKeSach = new javax.swing.JTable();
+        btnThemKS = new com.qltv.swing.Button();
+        btnSuaKS = new com.qltv.swing.Button();
+        btnXoaKS = new com.qltv.swing.Button();
+        btnMoiKS = new com.qltv.swing.Button();
+        pnlNCC = new javax.swing.JPanel();
+        txtTenNCC = new com.qltv.swing.TextField();
+        lblTenNCC = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
-        button9 = new com.qltv.swing.Button();
-        button10 = new com.qltv.swing.Button();
-        button11 = new com.qltv.swing.Button();
-        button12 = new com.qltv.swing.Button();
+        tblNCC = new javax.swing.JTable();
+        btnThemNCC = new com.qltv.swing.Button();
+        btnSuaNCC = new com.qltv.swing.Button();
+        btnXoaNCC = new com.qltv.swing.Button();
+        btnMoiNCC = new com.qltv.swing.Button();
 
-        panelBorder1.setPreferredSize(new java.awt.Dimension(1100, 650));
+        pnlChung.setBackground(new java.awt.Color(255, 255, 255));
+        pnlChung.setPreferredSize(new java.awt.Dimension(1100, 650));
 
-        jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jTabbedPane1.setForeground(new java.awt.Color(153, 102, 0));
-        jTabbedPane1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        tabs.setBackground(new java.awt.Color(255, 255, 255));
+        tabs.setForeground(new java.awt.Color(153, 102, 0));
+        tabs.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlLoaiSach.setBackground(new java.awt.Color(255, 255, 255));
+        pnlLoaiSach.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        textField1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        textField1.setLabelText("Tên loại");
-        jPanel1.add(textField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(308, 119, 514, -1));
+        txtLoai.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtLoai.setLabelText("Tên loại");
+        pnlLoaiSach.add(txtLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(308, 119, 514, -1));
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 3, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(102, 51, 0));
-        jLabel1.setText("LOẠI SÁCH");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 44, -1, -1));
+        lblLoai.setFont(new java.awt.Font("Times New Roman", 3, 36)); // NOI18N
+        lblLoai.setForeground(new java.awt.Color(102, 51, 0));
+        lblLoai.setText("LOẠI SÁCH");
+        pnlLoaiSach.add(lblLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 44, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblLoai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -300,70 +346,70 @@ public class QLChung extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblLoai.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                tblLoaiMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblLoai);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 275, 701, 319));
+        pnlLoaiSach.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 275, 701, 319));
 
-        button1.setText("Thêm");
-        button1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        button1.setPreferredSize(new java.awt.Dimension(90, 50));
-        button1.addActionListener(new java.awt.event.ActionListener() {
+        btnThemLS.setText("Thêm");
+        btnThemLS.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnThemLS.setPreferredSize(new java.awt.Dimension(90, 50));
+        btnThemLS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
+                btnThemLSActionPerformed(evt);
             }
         });
-        jPanel1.add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 200, -1, -1));
+        pnlLoaiSach.add(btnThemLS, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 200, -1, -1));
 
-        button2.setText("Cập nhật");
-        button2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        button2.setPreferredSize(new java.awt.Dimension(90, 50));
-        button2.addActionListener(new java.awt.event.ActionListener() {
+        btnSuaLS.setText("Cập nhật");
+        btnSuaLS.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnSuaLS.setPreferredSize(new java.awt.Dimension(90, 50));
+        btnSuaLS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button2ActionPerformed(evt);
+                btnSuaLSActionPerformed(evt);
             }
         });
-        jPanel1.add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(463, 200, -1, -1));
+        pnlLoaiSach.add(btnSuaLS, new org.netbeans.lib.awtextra.AbsoluteConstraints(463, 200, -1, -1));
 
-        button3.setText("Xóa");
-        button3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        button3.setPreferredSize(new java.awt.Dimension(90, 50));
-        button3.addActionListener(new java.awt.event.ActionListener() {
+        btnXoaLS.setText("Xóa");
+        btnXoaLS.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnXoaLS.setPreferredSize(new java.awt.Dimension(90, 50));
+        btnXoaLS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button3ActionPerformed(evt);
+                btnXoaLSActionPerformed(evt);
             }
         });
-        jPanel1.add(button3, new org.netbeans.lib.awtextra.AbsoluteConstraints(586, 200, -1, -1));
+        pnlLoaiSach.add(btnXoaLS, new org.netbeans.lib.awtextra.AbsoluteConstraints(586, 200, -1, -1));
 
-        button4.setText("Mới");
-        button4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        button4.setPreferredSize(new java.awt.Dimension(90, 50));
-        button4.addActionListener(new java.awt.event.ActionListener() {
+        btnMoiLS.setText("Mới");
+        btnMoiLS.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnMoiLS.setPreferredSize(new java.awt.Dimension(90, 50));
+        btnMoiLS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button4ActionPerformed(evt);
+                btnMoiLSActionPerformed(evt);
             }
         });
-        jPanel1.add(button4, new org.netbeans.lib.awtextra.AbsoluteConstraints(708, 200, -1, -1));
+        pnlLoaiSach.add(btnMoiLS, new org.netbeans.lib.awtextra.AbsoluteConstraints(708, 200, -1, -1));
 
-        jTabbedPane1.addTab(" LOẠI SÁCH", jPanel1);
+        tabs.addTab(" LOẠI SÁCH", pnlLoaiSach);
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlKeSach.setBackground(new java.awt.Color(255, 255, 255));
+        pnlKeSach.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        textField2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        textField2.setLabelText("Kệ sách");
-        jPanel4.add(textField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(308, 119, 514, -1));
+        txtKeSach.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtKeSach.setLabelText("Kệ sách");
+        pnlKeSach.add(txtKeSach, new org.netbeans.lib.awtextra.AbsoluteConstraints(308, 119, 514, -1));
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 3, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(102, 51, 0));
-        jLabel2.setText("KỆ SÁCH");
-        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 50, -1, -1));
+        lblKeSach.setFont(new java.awt.Font("Times New Roman", 3, 36)); // NOI18N
+        lblKeSach.setForeground(new java.awt.Color(102, 51, 0));
+        lblKeSach.setText("KỆ SÁCH");
+        pnlKeSach.add(lblKeSach, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 50, -1, -1));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblKeSach.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -382,70 +428,70 @@ public class QLChung extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblKeSach.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable2MouseClicked(evt);
+                tblKeSachMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tblKeSach);
 
-        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 275, 701, 319));
+        pnlKeSach.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 275, 701, 319));
 
-        button5.setText("Thêm");
-        button5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        button5.setPreferredSize(new java.awt.Dimension(90, 50));
-        button5.addActionListener(new java.awt.event.ActionListener() {
+        btnThemKS.setText("Thêm");
+        btnThemKS.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnThemKS.setPreferredSize(new java.awt.Dimension(90, 50));
+        btnThemKS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button5ActionPerformed(evt);
+                btnThemKSActionPerformed(evt);
             }
         });
-        jPanel4.add(button5, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 200, -1, -1));
+        pnlKeSach.add(btnThemKS, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 200, -1, -1));
 
-        button6.setText("Cập nhật");
-        button6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        button6.setPreferredSize(new java.awt.Dimension(90, 50));
-        button6.addActionListener(new java.awt.event.ActionListener() {
+        btnSuaKS.setText("Cập nhật");
+        btnSuaKS.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnSuaKS.setPreferredSize(new java.awt.Dimension(90, 50));
+        btnSuaKS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button6ActionPerformed(evt);
+                btnSuaKSActionPerformed(evt);
             }
         });
-        jPanel4.add(button6, new org.netbeans.lib.awtextra.AbsoluteConstraints(463, 200, -1, -1));
+        pnlKeSach.add(btnSuaKS, new org.netbeans.lib.awtextra.AbsoluteConstraints(463, 200, -1, -1));
 
-        button7.setText("Xóa");
-        button7.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        button7.setPreferredSize(new java.awt.Dimension(90, 50));
-        button7.addActionListener(new java.awt.event.ActionListener() {
+        btnXoaKS.setText("Xóa");
+        btnXoaKS.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnXoaKS.setPreferredSize(new java.awt.Dimension(90, 50));
+        btnXoaKS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button7ActionPerformed(evt);
+                btnXoaKSActionPerformed(evt);
             }
         });
-        jPanel4.add(button7, new org.netbeans.lib.awtextra.AbsoluteConstraints(586, 200, -1, -1));
+        pnlKeSach.add(btnXoaKS, new org.netbeans.lib.awtextra.AbsoluteConstraints(586, 200, -1, -1));
 
-        button8.setText("Mới");
-        button8.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        button8.setPreferredSize(new java.awt.Dimension(90, 50));
-        button8.addActionListener(new java.awt.event.ActionListener() {
+        btnMoiKS.setText("Mới");
+        btnMoiKS.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnMoiKS.setPreferredSize(new java.awt.Dimension(90, 50));
+        btnMoiKS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button8ActionPerformed(evt);
+                btnMoiKSActionPerformed(evt);
             }
         });
-        jPanel4.add(button8, new org.netbeans.lib.awtextra.AbsoluteConstraints(708, 200, -1, -1));
+        pnlKeSach.add(btnMoiKS, new org.netbeans.lib.awtextra.AbsoluteConstraints(708, 200, -1, -1));
 
-        jTabbedPane1.addTab("KỆ SÁCH", jPanel4);
+        tabs.addTab("KỆ SÁCH", pnlKeSach);
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlNCC.setBackground(new java.awt.Color(255, 255, 255));
+        pnlNCC.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        textField3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        textField3.setLabelText("Tên nhà cung cấp");
-        jPanel5.add(textField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(308, 119, 514, -1));
+        txtTenNCC.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtTenNCC.setLabelText("Tên nhà cung cấp");
+        pnlNCC.add(txtTenNCC, new org.netbeans.lib.awtextra.AbsoluteConstraints(308, 119, 514, -1));
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 3, 36)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(102, 51, 0));
-        jLabel3.setText("TÊN NHÀ CUNG CẤP");
-        jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 50, -1, -1));
+        lblTenNCC.setFont(new java.awt.Font("Times New Roman", 3, 36)); // NOI18N
+        lblTenNCC.setForeground(new java.awt.Color(102, 51, 0));
+        lblTenNCC.setText("TÊN NHÀ CUNG CẤP");
+        pnlNCC.add(lblTenNCC, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 50, -1, -1));
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tblNCC.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -464,66 +510,66 @@ public class QLChung extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblNCC.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable3MouseClicked(evt);
+                tblNCCMouseClicked(evt);
             }
         });
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(tblNCC);
 
-        jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 275, 701, 319));
+        pnlNCC.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 275, 701, 319));
 
-        button9.setText("Thêm");
-        button9.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        button9.setPreferredSize(new java.awt.Dimension(90, 50));
-        button9.addActionListener(new java.awt.event.ActionListener() {
+        btnThemNCC.setText("Thêm");
+        btnThemNCC.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnThemNCC.setPreferredSize(new java.awt.Dimension(90, 50));
+        btnThemNCC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button9ActionPerformed(evt);
+                btnThemNCCActionPerformed(evt);
             }
         });
-        jPanel5.add(button9, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 200, -1, -1));
+        pnlNCC.add(btnThemNCC, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 200, -1, -1));
 
-        button10.setText("Cập nhật");
-        button10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        button10.setPreferredSize(new java.awt.Dimension(90, 50));
-        button10.addActionListener(new java.awt.event.ActionListener() {
+        btnSuaNCC.setText("Cập nhật");
+        btnSuaNCC.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnSuaNCC.setPreferredSize(new java.awt.Dimension(90, 50));
+        btnSuaNCC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button10ActionPerformed(evt);
+                btnSuaNCCActionPerformed(evt);
             }
         });
-        jPanel5.add(button10, new org.netbeans.lib.awtextra.AbsoluteConstraints(463, 200, -1, -1));
+        pnlNCC.add(btnSuaNCC, new org.netbeans.lib.awtextra.AbsoluteConstraints(463, 200, -1, -1));
 
-        button11.setText("Xóa");
-        button11.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        button11.setPreferredSize(new java.awt.Dimension(90, 50));
-        button11.addActionListener(new java.awt.event.ActionListener() {
+        btnXoaNCC.setText("Xóa");
+        btnXoaNCC.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnXoaNCC.setPreferredSize(new java.awt.Dimension(90, 50));
+        btnXoaNCC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button11ActionPerformed(evt);
+                btnXoaNCCActionPerformed(evt);
             }
         });
-        jPanel5.add(button11, new org.netbeans.lib.awtextra.AbsoluteConstraints(586, 200, -1, -1));
+        pnlNCC.add(btnXoaNCC, new org.netbeans.lib.awtextra.AbsoluteConstraints(586, 200, -1, -1));
 
-        button12.setText("Mới");
-        button12.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        button12.setPreferredSize(new java.awt.Dimension(90, 50));
-        button12.addActionListener(new java.awt.event.ActionListener() {
+        btnMoiNCC.setText("Mới");
+        btnMoiNCC.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnMoiNCC.setPreferredSize(new java.awt.Dimension(90, 50));
+        btnMoiNCC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button12ActionPerformed(evt);
+                btnMoiNCCActionPerformed(evt);
             }
         });
-        jPanel5.add(button12, new org.netbeans.lib.awtextra.AbsoluteConstraints(708, 200, -1, -1));
+        pnlNCC.add(btnMoiNCC, new org.netbeans.lib.awtextra.AbsoluteConstraints(708, 200, -1, -1));
 
-        jTabbedPane1.addTab("NHÀ CUNG CẤP", jPanel5);
+        tabs.addTab("NHÀ CUNG CẤP", pnlNCC);
 
-        javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
-        panelBorder1.setLayout(panelBorder1Layout);
-        panelBorder1Layout.setHorizontalGroup(
-            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1100, Short.MAX_VALUE)
+        javax.swing.GroupLayout pnlChungLayout = new javax.swing.GroupLayout(pnlChung);
+        pnlChung.setLayout(pnlChungLayout);
+        pnlChungLayout.setHorizontalGroup(
+            pnlChungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 1100, Short.MAX_VALUE)
         );
-        panelBorder1Layout.setVerticalGroup(
-            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+        pnlChungLayout.setVerticalGroup(
+            pnlChungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -531,128 +577,146 @@ public class QLChung extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlChung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlChung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void tblLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLoaiMouseClicked
         // TODO add your handling code here:
-        if(evt.getClickCount() == 2){
+        if(evt.getClickCount() == 1){
         clickTableLoai();
         }
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_tblLoaiMouseClicked
 
-    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+    private void tblKeSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKeSachMouseClicked
         // TODO add your handling code here:
-        if(evt.getClickCount() == 2){
+        if(evt.getClickCount() == 1){
             clickTableKeSach();
         }
-    }//GEN-LAST:event_jTable2MouseClicked
+    }//GEN-LAST:event_tblKeSachMouseClicked
 
-    private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
+    private void tblNCCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNCCMouseClicked
         // TODO add your handling code here:
-        if(evt.getClickCount() == 2){
+        if(evt.getClickCount() == 1){
             clickTableNCC();
         }
-    }//GEN-LAST:event_jTable3MouseClicked
+    }//GEN-LAST:event_tblNCCMouseClicked
 
-    private void button9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button9ActionPerformed
+    private void btnThemNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNCCActionPerformed
         // TODO add your handling code here:
-        insertNCC();
-    }//GEN-LAST:event_button9ActionPerformed
+        if(XValidate.checkNullText(txtTenNCC)){
+            insertNCC();
+        }
+    }//GEN-LAST:event_btnThemNCCActionPerformed
 
-    private void button10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button10ActionPerformed
+    private void btnSuaNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaNCCActionPerformed
         // TODO add your handling code here:
-        updateNCC();
-    }//GEN-LAST:event_button10ActionPerformed
+        if(XValidate.checkNullText(txtTenNCC)){
+            updateNCC();
+        }
+    }//GEN-LAST:event_btnSuaNCCActionPerformed
 
-    private void button11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button11ActionPerformed
+    private void btnXoaNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaNCCActionPerformed
         // TODO add your handling code here:
-        deleteNCC();
-    }//GEN-LAST:event_button11ActionPerformed
+        if(XValidate.checkNullText(txtTenNCC)){
+            deleteNCC();
+        }
+    }//GEN-LAST:event_btnXoaNCCActionPerformed
 
-    private void button12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button12ActionPerformed
+    private void btnMoiNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiNCCActionPerformed
         // TODO add your handling code here:
         clearFormNCC();
-    }//GEN-LAST:event_button12ActionPerformed
+    }//GEN-LAST:event_btnMoiNCCActionPerformed
 
-    private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
+    private void btnThemKSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKSActionPerformed
         // TODO add your handling code here:
-        insertKS();
-    }//GEN-LAST:event_button5ActionPerformed
+        if(XValidate.checkNullText(txtKeSach)){
+            insertKS();
+        }
+    }//GEN-LAST:event_btnThemKSActionPerformed
 
-    private void button6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button6ActionPerformed
+    private void btnSuaKSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaKSActionPerformed
         // TODO add your handling code here:
-        updateKS();
-    }//GEN-LAST:event_button6ActionPerformed
+        if(XValidate.checkNullText(txtTenNCC)){
+            updateKS();
+        }
+    }//GEN-LAST:event_btnSuaKSActionPerformed
 
-    private void button7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button7ActionPerformed
+    private void btnXoaKSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaKSActionPerformed
         // TODO add your handling code here:
-        deleteKS();
-    }//GEN-LAST:event_button7ActionPerformed
+        if(XValidate.checkNullText(txtTenNCC)){
+            deleteKS();
+        }
+    }//GEN-LAST:event_btnXoaKSActionPerformed
 
-    private void button8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button8ActionPerformed
+    private void btnMoiKSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiKSActionPerformed
         // TODO add your handling code here:
         clearFormKS();
-    }//GEN-LAST:event_button8ActionPerformed
+    }//GEN-LAST:event_btnMoiKSActionPerformed
 
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+    private void btnThemLSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemLSActionPerformed
         // TODO add your handling code here:
+        if(XValidate.checkNullText(txtLoai)){
         insertLS();
-    }//GEN-LAST:event_button1ActionPerformed
+        }
+    }//GEN-LAST:event_btnThemLSActionPerformed
 
-    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+    private void btnSuaLSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaLSActionPerformed
         // TODO add your handling code here:
-        updateLS();
-    }//GEN-LAST:event_button2ActionPerformed
+        if(XValidate.checkNullText(txtLoai)){
+                updateLS();
+        }
+    }//GEN-LAST:event_btnSuaLSActionPerformed
 
-    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
+    private void btnXoaLSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaLSActionPerformed
         // TODO add your handling code here:
-        deleteLS();
-    }//GEN-LAST:event_button3ActionPerformed
+        if(XValidate.checkNullText(txtTenNCC)){
+            deleteLS();
+        }
+    }//GEN-LAST:event_btnXoaLSActionPerformed
 
-    private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
+    private void btnMoiLSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiLSActionPerformed
         // TODO add your handling code here:
         clearFormLS();
-    }//GEN-LAST:event_button4ActionPerformed
+    }//GEN-LAST:event_btnMoiLSActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.qltv.swing.Button button1;
-    private com.qltv.swing.Button button10;
-    private com.qltv.swing.Button button11;
-    private com.qltv.swing.Button button12;
-    private com.qltv.swing.Button button2;
-    private com.qltv.swing.Button button3;
-    private com.qltv.swing.Button button4;
-    private com.qltv.swing.Button button5;
-    private com.qltv.swing.Button button6;
-    private com.qltv.swing.Button button7;
-    private com.qltv.swing.Button button8;
-    private com.qltv.swing.Button button9;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
+    private com.qltv.swing.Button btnMoiKS;
+    private com.qltv.swing.Button btnMoiLS;
+    private com.qltv.swing.Button btnMoiNCC;
+    private com.qltv.swing.Button btnSuaKS;
+    private com.qltv.swing.Button btnSuaLS;
+    private com.qltv.swing.Button btnSuaNCC;
+    private com.qltv.swing.Button btnThemKS;
+    private com.qltv.swing.Button btnThemLS;
+    private com.qltv.swing.Button btnThemNCC;
+    private com.qltv.swing.Button btnXoaKS;
+    private com.qltv.swing.Button btnXoaLS;
+    private com.qltv.swing.Button btnXoaNCC;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
-    private com.qltv.swing.PanelBorder panelBorder1;
-    private com.qltv.swing.TextField textField1;
-    private com.qltv.swing.TextField textField2;
-    private com.qltv.swing.TextField textField3;
+    private javax.swing.JLabel lblKeSach;
+    private javax.swing.JLabel lblLoai;
+    private javax.swing.JLabel lblTenNCC;
+    private com.qltv.swing.PanelBorder pnlChung;
+    private javax.swing.JPanel pnlKeSach;
+    private javax.swing.JPanel pnlLoaiSach;
+    private javax.swing.JPanel pnlNCC;
+    private javax.swing.JTabbedPane tabs;
+    private javax.swing.JTable tblKeSach;
+    private javax.swing.JTable tblLoai;
+    private javax.swing.JTable tblNCC;
+    private com.qltv.swing.TextField txtKeSach;
+    private com.qltv.swing.TextField txtLoai;
+    private com.qltv.swing.TextField txtTenNCC;
     // End of variables declaration//GEN-END:variables
 }

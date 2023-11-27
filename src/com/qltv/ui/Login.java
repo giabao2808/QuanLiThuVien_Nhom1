@@ -6,8 +6,10 @@ import com.qltv.entity.NhanVien;
 import com.qltv.entity.TaiKhoan;
 import com.qltv.utils.Auth;
 import com.qltv.utils.MsgBox;
+import com.qltv.utils.XValidate;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -21,7 +23,10 @@ import javax.swing.Timer;
  * @author RAVEN
  */
 public class Login extends javax.swing.JFrame {
+
+    int temp;
     TaiKhoanDAO nvdao = new TaiKhoanDAO();
+
     /**
      * Creates new form Main
      */
@@ -29,15 +34,12 @@ public class Login extends javax.swing.JFrame {
         initComponents();
     }
 
-    
     private void login() {
         String manv = txtMaNV.getText();
-        String mk = String.valueOf(txtMatKhau.getText());
-        System.out.println(manv);
-        System.out.println(mk);
-        try{
+        String mk = String.valueOf(txtMatKhau.getPassword());
+        System.out.println("User = " + manv);
+        System.out.println("Pass = " + mk);
         TaiKhoan nv = nvdao.selectByIds(manv);
-        
         if (nv == null) {
             MsgBox.alert(this, "Sai tên đăng nhập!");
         } else if (!mk.equals(nv.getPass())) {
@@ -48,10 +50,7 @@ public class Login extends javax.swing.JFrame {
             Auth.user = nv;
             this.dispose();
         }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        
+
     }
 
     private void exit() {
@@ -70,9 +69,9 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         button2 = new com.qltv.swing.Button();
         jLabel3 = new javax.swing.JLabel();
-        txtMatKhau = new com.qltv.swing.TextField();
         txtMaNV = new com.qltv.swing.TextField();
         jLabel5 = new javax.swing.JLabel();
+        txtMatKhau = new com.qltv.swing.PasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -89,13 +88,13 @@ public class Login extends javax.swing.JFrame {
 
         viewPass.setBackground(new java.awt.Color(255, 255, 102));
         viewPass.setForeground(new java.awt.Color(204, 204, 204));
-        viewPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qltv/icon/wiew.png"))); // NOI18N
+        viewPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qltv/icon/show.png"))); // NOI18N
         viewPass.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 viewPassMouseClicked(evt);
             }
         });
-        panelSlide1.add(viewPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 250, 30, 20));
+        panelSlide1.add(viewPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 260, 30, 20));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qltv/icon/hinhnenlogin.jpg"))); // NOI18N
         panelSlide1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 500));
@@ -108,25 +107,15 @@ public class Login extends javax.swing.JFrame {
                 button2ActionPerformed(evt);
             }
         });
-        panelSlide1.add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 370, 150, -1));
+        panelSlide1.add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 370, 150, -1));
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(215, 163, 90));
         jLabel3.setText("Quên mật khẩu ?");
-        panelSlide1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 300, -1, -1));
+        panelSlide1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 310, -1, -1));
 
-        txtMatKhau.setText("1234");
-        txtMatKhau.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        txtMatKhau.setLabelText("Mật khẩu");
-        txtMatKhau.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMatKhauActionPerformed(evt);
-            }
-        });
-        panelSlide1.add(txtMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 230, 306, -1));
-
-        txtMaNV.setText("phuchh");
-        txtMaNV.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtMaNV.setText("baohg");
+        txtMaNV.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         txtMaNV.setLabelText("Tên đăng nhập");
         txtMaNV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,6 +133,11 @@ public class Login extends javax.swing.JFrame {
         });
         panelSlide1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 10, -1, -1));
 
+        txtMatKhau.setText("1234");
+        txtMatKhau.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        txtMatKhau.setLabelText("Mật khẩu");
+        panelSlide1.add(txtMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 240, 310, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -160,44 +154,43 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewPassMouseClicked
-
-        //        if (temp % 2 == 0) {
-            //            String view = String.valueOf(txt_pass.getPassword()).trim();
-            //            if (view.isEmpty()) {
-                //                return;
-                //            }
-            //            txt_pass.setEchoChar((char) 0);
-            ////            txt_pass.setFont(new Font("Arial", Font.PLAIN, 12));
-            //            viewPass.setIcon(new ImageIcon("src//G7/fpoly/icon/dontshow.png"));
-            //            temp++;
-            //        } else {
-            //            String view = String.valueOf(txt_pass.getPassword()).trim();
-            //            if (view.isEmpty()) {
-                //                return;
-                //            }
-            //            txt_pass.setEchoChar('\uf06c');
-            ////            txt_pass.setFont(new Font("Caribi", Font.PLAIN, 12));
-            //            viewPass.setIcon(new ImageIcon("src//G7/fpoly/icon/show.png"));
-            //            temp++;
-            //        }
+        if (temp % 2 == 0) {
+            String view = String.valueOf(txtMatKhau.getPassword()).trim();
+            if (view.isEmpty()) {
+                return;
+            }
+            txtMatKhau.setEchoChar((char) 0);
+            viewPass.setIcon(new ImageIcon("D:\\quanlythuvien\\src\\com\\qltv\\icon\\dontshow.png"));
+            temp++;
+        } else {
+            String view = String.valueOf(txtMatKhau.getPassword()).trim();
+            if (view.isEmpty()) {
+                return;
+            }
+            txtMatKhau.setEchoChar('\uf06c');
+            viewPass.setIcon(new ImageIcon("D:\\quanlythuvien\\src\\com\\qltv\\icon\\show.png"));
+            temp++;
+        }
     }//GEN-LAST:event_viewPassMouseClicked
-
-    private void txtMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatKhauActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMatKhauActionPerformed
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
-                boolean choose = MsgBox.confirm(this, "Bạn có muốn đóng không?");
-        if(choose == true){
-            System.exit(0);
-        }
+        exit();
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         // TODO add your handling code here:
-        login();
-        new Main().setVisible(true);
+        if (txtMaNV.getText().trim().length() > 0) {
+            if (txtMatKhau.getPassword().length > 0){
+                this.login();
+                new Main().setVisible(true);
+            } else {
+                MsgBox.alert(this, "Không được để trống tên mật khẩu.");
+            }
+        } else {
+            MsgBox.alert(this, "Không được để trống tên đăng nhập.");
+        }
+        
     }//GEN-LAST:event_button2ActionPerformed
 
     private void txtMaNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaNVActionPerformed
@@ -249,7 +242,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private com.qltv.swing.PanelSlide panelSlide1;
     private com.qltv.swing.TextField txtMaNV;
-    private com.qltv.swing.TextField txtMatKhau;
+    private com.qltv.swing.PasswordField txtMatKhau;
     private javax.swing.JLabel viewPass;
     // End of variables declaration//GEN-END:variables
 }

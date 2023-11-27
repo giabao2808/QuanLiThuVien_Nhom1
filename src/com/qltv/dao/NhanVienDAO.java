@@ -8,6 +8,7 @@ import com.qltv.entity.NhanVien;
 import com.qltv.utils.XJdbc;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -15,10 +16,42 @@ import java.util.ArrayList;
  */
 public class NhanVienDAO {
     public ResultSet rs;
+    public static String INSERT_SQL = "insert into NhanVien (TenNV, NamSinh, GioiTinh, DiaChi, Sđt) values (?,?,?,?,?)";
+    public static String UPDATE_SQL = "update NhanVien set TenNV = ?, NamSinh = ?, GioiTinh = ?, DiaChi = ?, Sđt = ? where MaNV = ?";
+    public static String DELETE_SQL = "delete from NhanVien where MaNV = ?";
     public static String SELECT_ALL = "select * from NhanVien";
+    public static String SELECT_BY_ID = "select * from NhanVien where MaNV = ?";
+    
+    public void insert(NhanVien entity) {
+        XJdbc.update(INSERT_SQL,
+                entity.getTen(),
+                entity.getNam(),
+                entity.isGiotinh(),
+                entity.getDiachi(),
+                entity.getSdt());
+    }
+
+    public void update(NhanVien entity) {
+        XJdbc.update(UPDATE_SQL,
+                entity.getTen(),
+                entity.getNam(),
+                entity.isGiotinh(),
+                entity.getDiachi(),
+                entity.getSdt(),
+                entity.getMa());
+    }
+    
+    public void delete(int key) {
+        XJdbc.update(DELETE_SQL, key);
+    }
     
     public ArrayList<NhanVien> selectAll(){
         return selectBySql(SELECT_ALL);
+    }
+    
+    public NhanVien selectById(int key) {
+        List<NhanVien> list = selectBySql(SELECT_BY_ID, key);
+        return list.size() > 0 ? list.get(0) : null;
     }
     
     protected ArrayList<NhanVien> selectBySql(String sql, Object... args) {

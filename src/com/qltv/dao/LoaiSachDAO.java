@@ -3,18 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.qltv.dao;
-import static com.qltv.dao.KeSachDAO.DELETE_SQL;
-import static com.qltv.dao.KeSachDAO.INSERT_SQL;
-import static com.qltv.dao.KeSachDAO.UPDATE_SQL;
-import static com.qltv.dao.NhaXuatBanDAO.DELETE_SQL;
-import static com.qltv.dao.NhaXuatBanDAO.INSERT_SQL;
-import static com.qltv.dao.NhaXuatBanDAO.SELECT_ALL_SQL;
-import static com.qltv.dao.NhaXuatBanDAO.SELECT_BY_ID_SQL;
-import static com.qltv.dao.NhaXuatBanDAO.UPDATE_SQL;
-import static com.qltv.dao.NhaXuatBanDAO.rs;
-import com.qltv.entity.KeSach;
+
 import com.qltv.entity.LoaiSach;
-import com.qltv.entity.NhaXuatBan;
 import com.qltv.utils.XJdbc;
     import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,6 +21,7 @@ public class LoaiSachDAO {
     public String UPDATE_SQL = "update Loai set TenLoai = ? where MaLoai = ?";
     public String DELETE_SQL = "delete from Loai where MaLoai = ? ";
     public String SELECT_ALL = "select * from Loai";
+    
     
     public void insert(LoaiSach entity){
         XJdbc.update(INSERT_SQL, 
@@ -52,13 +43,12 @@ public class LoaiSachDAO {
         return selectBySql(SELECT_ALL);
     }
 
-    public LoaiSach selectById(String id) {
-        List<LoaiSach> list = selectBySql(SELECT_BY_ID_SQL, id);
-        if(list.isEmpty()){
-            return null;
-        }
-        return list.get(0);
+    public List<String> selectById() {
+        String SELECT_ID = "select TenLoai from Loai";
+        return selectByName( SELECT_ID);
     }
+    
+    
     
     protected ArrayList<LoaiSach> selectBySql(String sql, Object... args) {
         ArrayList<LoaiSach> list = new ArrayList<>();
@@ -69,6 +59,7 @@ public class LoaiSachDAO {
                     LoaiSach dg = new LoaiSach();
                     dg.setMaLoai(rs.getInt(1));
                     dg.setTenLoai(rs.getString(2));
+                    
                     list.add(dg);
                 }
             } finally {
@@ -80,6 +71,27 @@ public class LoaiSachDAO {
         }
         return list;
     }
+    
+    protected ArrayList<String> selectByName(String sql, Object... args) {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            try {
+                rs = XJdbc.query(sql);
+                while (rs.next()) {
+                    String tenLoai = rs.getString("TenLoai");
+                    list.add(tenLoai);
+                                    }
+            } finally {
+                rs.getStatement().getConnection().close();
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+//            throw new RuntimeException(ex);
+        }
+        return list;
+    }
+    
+    
     
 //    public ArrayList<LoaiSach> selectByLoaiSach() {
 //        String sql= "Select * from Loai";

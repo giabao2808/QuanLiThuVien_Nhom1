@@ -16,8 +16,32 @@ import java.util.List;
  */
 public class TaiKhoanDAO {
     
+    public static String INSERT_SQL = "insert into TaiKhoan (Username ,Password , Quyen, MaNV) values (?,?,?,?)";
+    public static String UPDATE_SQL = "update TaiKhoan set Username = ?, Password = ?, Quyen = ?, MaNV = ? where MaTK = ? ";
+    public static String DELETE_SQL = "delete from TaiKhoan where MaTK = ?";
     public static String SELECT_ALL = "select * from TaiKhoan";
     public static String SELECT_BY_ID = "select * from TaiKhoan where Username = ?";
+    
+    public void insert(TaiKhoan entity) {
+        XJdbc.update(INSERT_SQL,
+                entity.getUser(),
+                entity.getPass(),
+                entity.isQuyen(),
+                entity.getManv());
+    }
+
+    public void update(TaiKhoan entity) {
+        XJdbc.update(UPDATE_SQL,
+                entity.getUser(),
+                entity.getPass(),
+                entity.isQuyen(),
+                entity.getManv(),
+                entity.getMatk());
+    }
+    
+    public void delete(int key) {
+        XJdbc.update(DELETE_SQL, key);
+    }
     
     public ArrayList<TaiKhoan> SelectAll(){
         return SelectById(SELECT_ALL);

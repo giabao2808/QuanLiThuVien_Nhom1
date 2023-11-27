@@ -64,7 +64,6 @@ public class Main extends javax.swing.JFrame {
         });
         //  set when system open start with home form
         setForm(new Form_Home());
-        new Login().setVisible(true);
     }
 
     private void setForm(JComponent com) {

@@ -5,15 +5,13 @@
  */
 package com.qltv.ui;
 
-import com.qltv.dao.LoaiSachDAO;
-import com.qltv.dao.SachDAO;
-import com.qltv.entity.LoaiSach;
-import com.qltv.entity.NhaXuatBan;
-import com.qltv.entity.Sach;
+import com.qltv.dao.*;
+import com.qltv.entity.*;
 import com.qltv.utils.MsgBox;
 import com.qltv.utils.XDate;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,15 +23,25 @@ public class QLSach extends javax.swing.JPanel {
 
     SachDAO sdao = new SachDAO();
     LoaiSachDAO lsdao = new LoaiSachDAO();
+    KeSachDAO ksdao = new KeSachDAO();
+    TacGiaDAO tgdao = new TacGiaDAO();
+    NhaXuatBanDAO nxbdao = new NhaXuatBanDAO();
     /**
      * Creates new form Form_1
      */
     public QLSach() {
         initComponents();
         this.fillTable();
-        this.fillComboBoxLoaiSach();
+        init();
     }
 
+    void init(){
+        this.fillComboBoxLoaiSach();
+        this.fillComboBoxKeSach();
+        this.fillComboBoxNXB();
+        this.fillComboBoxTacGia();
+    }
+    
     private void fillTable() {
         DefaultTableModel model = (DefaultTableModel) tblSach.getModel();
         model.setRowCount(0);
@@ -49,32 +57,49 @@ public class QLSach extends javax.swing.JPanel {
                     dg.getNam(),
                     dg.getSoluong(),
                     dg.getMaKe(),
-                    dg.getHinh(),
                     dg.getGhichu()
                 };
                 model.addRow(row);
+        
             }
         } catch (Exception e) {
             MsgBox.alert(this, "Lỗi truy vấn dữ liệu sách!");
             e.printStackTrace();
         }
+        
     }
     
     private void fillComboBoxLoaiSach() {
-        try {
-            DefaultComboBoxModel model = (DefaultComboBoxModel) cboLoai.getModel();
-            model.removeAllElements();
-            Sach cd = (Sach) cboLoai.getSelectedItem();
-            System.out.println(cd);
-            if (cd != null) {
-                List<LoaiSach> list = lsdao.selectAll();
-                for (LoaiSach kh : list) {
-                    model.addElement(kh);
-                    
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cboLoai.getModel();
+        model.removeAllElements();
+//        cboLoai.removeAllItems();
+            List<String> data = lsdao.selectById();
+            for (String item : data) {
+                cboLoai.addItem(item);
+        }
+    }
+    
+    private void fillComboBoxKeSach() {
+        cboKeSach.removeAllItems();
+            List<String> data = ksdao.selectById();
+            for (String item : data) {
+                cboKeSach.addItem(item);
+        }
+    }
+    
+    private void fillComboBoxTacGia() {
+        cboTacGia.removeAllItems();
+            List<String> data = tgdao.selectById();
+            for (String item : data) {
+                cboTacGia.addItem(item);
+        }
+    }
+    
+    private void fillComboBoxNXB() {
+        cboNXB.removeAllItems();
+            List<String> data = nxbdao.selectById();
+            for (String item : data) {
+                cboNXB.addItem(item);
         }
     }
     
@@ -160,7 +185,7 @@ public class QLSach extends javax.swing.JPanel {
         button5.setPreferredSize(new java.awt.Dimension(90, 50));
         jPanel1.add(button5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 530, -1, -1));
 
-        txtTen.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtTen.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         txtTen.setLabelText("Tên sách");
         txtTen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,13 +194,13 @@ public class QLSach extends javax.swing.JPanel {
         });
         jPanel1.add(txtTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 80, 570, -1));
 
-        txtNam.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtNam.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         txtNam.setLabelText("Năm sản xuất");
-        jPanel1.add(txtNam, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 230, 270, 40));
+        jPanel1.add(txtNam, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 220, 270, 50));
 
-        txtSoLuong.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtSoLuong.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         txtSoLuong.setLabelText("Số lượng");
-        jPanel1.add(txtSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 270, 40));
+        jPanel1.add(txtSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 290, 270, 50));
 
         button6.setText("Cập nhật");
         button6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -204,7 +229,7 @@ public class QLSach extends javax.swing.JPanel {
         jLabel1.setText("SÁCH");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, -1, -1));
 
-        cboLoai.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        cboLoai.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         cboLoai.setLabeText("Loại sách");
         cboLoai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -213,15 +238,15 @@ public class QLSach extends javax.swing.JPanel {
         });
         jPanel1.add(cboLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 150, 270, -1));
 
-        cboNXB.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        cboNXB.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         cboNXB.setLabeText("Nhà xuất bản");
-        jPanel1.add(cboNXB, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 230, 270, 40));
+        jPanel1.add(cboNXB, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 220, 270, 50));
 
-        cboKeSach.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        cboKeSach.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         cboKeSach.setLabeText("Kệ sách");
-        jPanel1.add(cboKeSach, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 310, 270, 40));
+        jPanel1.add(cboKeSach, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 290, 270, 50));
 
-        cboTacGia.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        cboTacGia.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         cboTacGia.setLabeText("Tác giả");
         jPanel1.add(cboTacGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 150, 270, -1));
 
@@ -256,17 +281,17 @@ public class QLSach extends javax.swing.JPanel {
 
         tblSach.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã sách", "Tên sách", "Mã loại", "Mã NXB", "Mã tác giả", "Năm xuất bản", "Số lượng", "Mã kệ", "Hình ảnh", "Ghi chú"
+                "Mã sách", "Tên sách", "Mã loại", "Mã NXB", "Mã tác giả", "Năm xuất bản", "Số lượng", "Mã kệ", "Ghi chú"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true, true, true, true
+                false, true, true, true, true, true, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -313,7 +338,6 @@ public class QLSach extends javax.swing.JPanel {
 
     private void cboLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboLoaiActionPerformed
         // TODO add your handling code here:
-        fillComboBoxLoaiSach();
     }//GEN-LAST:event_cboLoaiActionPerformed
 
 

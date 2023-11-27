@@ -4,6 +4,8 @@
  */
 package com.qltv.ui;
 
+import com.qltv.utils.Auth;
+
 /**
  *
  * @author Admin
@@ -15,6 +17,7 @@ public class QLPhieuMuon extends javax.swing.JPanel {
      */
     public QLPhieuMuon() {
         initComponents();
+        txtNhanVien.setText(Auth.user.getUser());
     }
 
     /**
@@ -39,7 +42,7 @@ public class QLPhieuMuon extends javax.swing.JPanel {
         button3 = new com.qltv.swing.Button();
         button4 = new com.qltv.swing.Button();
         combobox2 = new com.qltv.swing.Combobox();
-        textField1 = new com.qltv.swing.TextField();
+        txtNhanVien = new com.qltv.swing.TextField();
         jPanel3 = new javax.swing.JPanel();
         textField3 = new com.qltv.swing.TextField();
         textField4 = new com.qltv.swing.TextField();
@@ -127,9 +130,9 @@ public class QLPhieuMuon extends javax.swing.JPanel {
         combobox2.setLabeText("Độc giả");
         jPanel2.add(combobox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 44, 260, -1));
 
-        textField1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        textField1.setLabelText("Nhân Viên");
-        jPanel2.add(textField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(116, 42, 263, -1));
+        txtNhanVien.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtNhanVien.setLabelText("Nhân Viên");
+        jPanel2.add(txtNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(116, 42, 263, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Phiếu mượn", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 18), new java.awt.Color(153, 102, 0))); // NOI18N
@@ -439,11 +442,11 @@ public class QLPhieuMuon extends javax.swing.JPanel {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private com.qltv.swing.PanelBorder panelBorder1;
-    private com.qltv.swing.TextField textField1;
     private com.qltv.swing.TextField textField2;
     private com.qltv.swing.TextField textField3;
     private com.qltv.swing.TextField textField4;
     private com.qltv.swing.TextField textField5;
     private com.qltv.swing.TextField textField6;
+    private com.qltv.swing.TextField txtNhanVien;
     // End of variables declaration//GEN-END:variables
 }
