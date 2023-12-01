@@ -20,6 +20,8 @@ public class SachDAO {
     public static String INSERT_SQL = "insert into Sach (TenSach,MaLoai,MaNXB,MaTacGia,NamXB,SoLuong,MaKe,HinhAnh,GhiChu values (?,?,?,?,?,?,?,?,?)";
     public static String UPDATE_SQL = "update Sach set TenSach = ?, MaLoai = ?, MaNXB = ?, MaTacGia = ?, NamXB = ?, SoLuong = ?, MaKe = ?, HinhAnh = ?, GhiChu = ? where MaSach = ?";
     public static String DELETE_SQL = "delete from Sach where MaSach = ?";
+    public static String SELECT_BY_ID = "select * from Sach where MaSach = ?";
+    public static String SELECT_BY_LOAI = "select TenLoai from Loai where MaLoai = ?";
     public static String SELECT_ALL_SQL = "select A.MaSach,A.TenSach, B.TenLoai,C.TenNXB,D.TenTacGia,NamXB,SoLuong,E.ViTri,GhiChu  \n" +
                                             "from Sach A inner join Loai B\n" +
                                             "on A.MaLoai = B.MaLoai\n" +
@@ -65,6 +67,13 @@ public class SachDAO {
         return selectBySql(SELECT_ALL_SQL);
     }
     
+    public Sach selectById(String key) {
+        List<Sach> list = selectBySql(SELECT_BY_ID, key);
+        return list.size() > 0 ? list.get(0) : null;
+    }
+
+    
+    
     protected ArrayList<Sach> selectBySql(String sql, Object... args) {
         ArrayList<Sach> list = new ArrayList<>();
         try {
@@ -80,6 +89,7 @@ public class SachDAO {
                     s.setNam(rs.getInt(6));
                     s.setSoluong(rs.getInt(7));
                     s.setMaKe(rs.getString(8));
+//                    s.setHinh(rs.getString(9));
                     s.setGhichu(rs.getString(9));
                 list.add(s);
                 }

@@ -9,8 +9,8 @@ package com.qltv.entity;
  * @author Admin
  */
 public class Sach {
-    String ma,ten,hinh,ghichu, maLoai, maNXB, maTG,maKe;
-    int nam, soluong ;
+    String ma,ten,hinh,ghichu, maNXB, maLoai , maTG,maKe;
+    int nam, soluong;
 
     public Sach() {
     }

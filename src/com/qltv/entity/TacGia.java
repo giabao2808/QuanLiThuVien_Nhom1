@@ -10,16 +10,17 @@ package com.qltv.entity;
  */
 public class TacGia {
     int ma,namsinh;
-    String ten,quequan;
+    String ten,quequan,hinh;
 
     public TacGia() {
     }
 
-    public TacGia(int ma, int namsinh, String ten, String quequan) {
+    public TacGia(int ma, int namsinh, String ten, String quequan, String hinh) {
         this.ma = ma;
         this.namsinh = namsinh;
         this.ten = ten;
         this.quequan = quequan;
+        this.hinh = hinh;
     }
 
     public int getMa() {
@@ -53,6 +54,16 @@ public class TacGia {
     public void setQuequan(String quequan) {
         this.quequan = quequan;
     }
+
+    public String getHinh() {
+        return hinh;
+    }
+
+    public void setHinh(String hinh) {
+        this.hinh = hinh;
+    }
+
+    
     
     
 }

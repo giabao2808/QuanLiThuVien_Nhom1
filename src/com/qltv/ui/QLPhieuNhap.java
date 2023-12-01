@@ -4,18 +4,113 @@
  */
 package com.qltv.ui;
 
+import com.qltv.dao.NhaCungCapDAO;
+import com.qltv.dao.NhanVienDAO;
+import com.qltv.dao.PhieuNhapDAO;
+import com.qltv.entity.NhaCungCap;
+import com.qltv.entity.NhanVien;
+import com.qltv.entity.PhieuNhap;
+import com.qltv.utils.MsgBox;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
  */
 public class QLPhieuNhap extends javax.swing.JPanel {
 
+    PhieuNhapDAO pndao = new PhieuNhapDAO();
+    NhaCungCapDAO nccdao = new NhaCungCapDAO();
+    NhanVienDAO nvdao = new NhanVienDAO();
     /**
      * Creates new form QLPhieuNhap
      */
     public QLPhieuNhap() {
         initComponents();
+        this.fillTablePN();
+        this.fillComboBoxNCC();
+        this.fillComboBoxNV();
     }
+
+    private void fillTablePN() {
+        
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        model.setRowCount(0);
+        try {
+            List<PhieuNhap> list = pndao.selectAll();
+            for (PhieuNhap dg : list) {
+                Object[] row = {
+                    dg.getMa(),
+                    pndao.selectNCC(dg.getMancc()),
+                    pndao.selectNXB(dg.getManv()),
+                    dg.getNgaynhap(),
+                    dg.getTong()
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            MsgBox.alert(this, "Lỗi truy vấn dữ liệu phiếu nhập!");
+            e.printStackTrace();
+        }
+        
+    }
+    
+    private void fillComboBoxNCC() {
+        cboNCC.removeAllItems();
+            List<String> data = nccdao.selectById();
+            for (String item : data) {
+                cboNCC.addItem(item);
+        }
+    }
+    
+    private void fillComboBoxNV() {
+        cboNV.removeAllItems();
+            List<String> data = nvdao.selectById();
+            for (String item : data) {
+                cboNV.addItem(item);
+        }
+    }
+    
+    private void insert() {
+        PhieuNhap model = getForm();
+        try {
+            pndao.insert(model);
+            this.fillTablePN();
+//            this.clearForm();
+            MsgBox.alert(this, "Thêm phiếu nhập mới thành công!");
+        } catch (Exception e) {
+            MsgBox.alert(this, "Thêm phiếu nhập mới thất bại!");
+            e.printStackTrace();
+        }
+
+    }
+    
+    private PhieuNhap getForm() {
+    PhieuNhap s = new PhieuNhap();
+    try {
+        Object selectedNV = cboNV.getSelectedItem();
+        Object selectedNCC = cboNCC.getSelectedItem();
+
+        if (selectedNV != null) {
+            s.setManv(pndao.selectNV((String) selectedNV));
+        }
+
+        if (selectedNCC != null) {
+            s.setMancc(pndao.selectNCC1((String) selectedNCC));
+        }
+
+        s.setNgaynhap(dateNgayNhap.getDate());
+        s.setTong(Integer.parseInt(txtTong.getText()));
+    } catch (NumberFormatException ex) {
+        // Xử lý ngoại lệ khi parse không thành công
+        ex.printStackTrace();
+    } catch (Exception e) {
+        // Xử lý các ngoại lệ khác mà bạn quan tâm
+        e.printStackTrace();
+    }
+    return s;
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,16 +125,16 @@ public class QLPhieuNhap extends javax.swing.JPanel {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        dateNgayNhap = new com.toedter.calendar.JDateChooser();
         button1 = new com.qltv.swing.Button();
         button2 = new com.qltv.swing.Button();
         button3 = new com.qltv.swing.Button();
         button4 = new com.qltv.swing.Button();
-        combobox1 = new com.qltv.swing.Combobox();
-        textField7 = new com.qltv.swing.TextField();
+        cboNCC = new com.qltv.swing.Combobox();
+        txtTong = new com.qltv.swing.TextField();
         button10 = new com.qltv.swing.Button();
         button7 = new com.qltv.swing.Button();
-        textField1 = new com.qltv.swing.TextField();
+        cboNV = new com.qltv.swing.Combobox();
         jPanel3 = new javax.swing.JPanel();
         textField3 = new com.qltv.swing.TextField();
         textField4 = new com.qltv.swing.TextField();
@@ -79,12 +174,18 @@ public class QLPhieuNhap extends javax.swing.JPanel {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Phiếu nhập", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 18), new java.awt.Color(153, 102, 0))); // NOI18N
         jPanel2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
 
-        jDateChooser1.setBackground(new java.awt.Color(255, 255, 255));
-        jDateChooser1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        dateNgayNhap.setBackground(new java.awt.Color(255, 255, 255));
+        dateNgayNhap.setDateFormatString("dd-MM-yyyy");
+        dateNgayNhap.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         button1.setText("Thêm");
         button1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button1.setPreferredSize(new java.awt.Dimension(90, 50));
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
 
         button2.setText("Cập nhật");
         button2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -98,11 +199,11 @@ public class QLPhieuNhap extends javax.swing.JPanel {
         button4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button4.setPreferredSize(new java.awt.Dimension(90, 50));
 
-        combobox1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        combobox1.setLabeText("Nhà cung cấp");
+        cboNCC.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        cboNCC.setLabeText("Nhà cung cấp");
 
-        textField7.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        textField7.setLabelText("Tổng tiền");
+        txtTong.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtTong.setLabelText("Tổng tiền");
 
         button10.setText(" In");
         button10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -112,8 +213,8 @@ public class QLPhieuNhap extends javax.swing.JPanel {
         button7.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         button7.setPreferredSize(new java.awt.Dimension(90, 50));
 
-        textField1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        textField1.setLabelText("Nhân viên");
+        cboNV.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        cboNV.setLabeText("Nhân Viên");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -122,13 +223,16 @@ public class QLPhieuNhap extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(114, 114, 114)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(combobox1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE))
+                    .addComponent(cboNCC, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateNgayNhap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE))
                 .addGap(61, 61, 61)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textField7, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-                    .addComponent(textField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(55, 55, 55)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txtTong, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+                        .addGap(55, 55, 55))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(cboNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -150,10 +254,10 @@ public class QLPhieuNhap extends javax.swing.JPanel {
                             .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
+                        .addGap(42, 42, 42)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(combobox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cboNCC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboNV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -166,8 +270,8 @@ public class QLPhieuNhap extends javax.swing.JPanel {
                             .addComponent(button7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(textField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dateNgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(22, 22, 22)))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
@@ -292,7 +396,7 @@ public class QLPhieuNhap extends javax.swing.JPanel {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("PHIẾU MƯỢN", jPanel1);
@@ -333,9 +437,17 @@ public class QLPhieuNhap extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã phiếu nhập", "Mã nhà cung cấp", "Mã nhân viên", "Ngày nhập"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane3.setViewportView(jTable2);
 
         jPanel6.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 345));
@@ -381,6 +493,11 @@ public class QLPhieuNhap extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        // TODO add your handling code here:
+        insert();
+    }//GEN-LAST:event_button1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.qltv.swing.Button button1;
@@ -394,9 +511,10 @@ public class QLPhieuNhap extends javax.swing.JPanel {
     private com.qltv.swing.Button button7;
     private com.qltv.swing.Button button8;
     private com.qltv.swing.Button button9;
-    private com.qltv.swing.Combobox combobox1;
+    private com.qltv.swing.Combobox cboNCC;
+    private com.qltv.swing.Combobox cboNV;
     private com.qltv.swing.Combobox combobox3;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser dateNgayNhap;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -410,13 +528,12 @@ public class QLPhieuNhap extends javax.swing.JPanel {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private com.qltv.swing.PanelBorder panelBorder1;
-    private com.qltv.swing.TextField textField1;
     private com.qltv.swing.TextField textField3;
     private com.qltv.swing.TextField textField4;
     private com.qltv.swing.TextField textField5;
     private com.qltv.swing.TextField textField6;
-    private com.qltv.swing.TextField textField7;
     private com.qltv.swing.TextField textField8;
     private com.qltv.swing.TextField textField9;
+    private com.qltv.swing.TextField txtTong;
     // End of variables declaration//GEN-END:variables
 }

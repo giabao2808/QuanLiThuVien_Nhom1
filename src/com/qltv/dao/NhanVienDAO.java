@@ -78,4 +78,28 @@ public class NhanVienDAO {
         }
         return list;
     }
+    
+    public List<String> selectById() {
+        String SELECT_ID = "select TenNV from NhanVien";
+        return selectByName( SELECT_ID);
+    }
+    
+    protected ArrayList<String> selectByName(String sql, Object... args) {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            try {
+                rs = XJdbc.query(sql);
+                while (rs.next()) {
+                    String tenLoai = rs.getString("TenNV");
+                    list.add(tenLoai);
+                                    }
+            } finally {
+                rs.getStatement().getConnection().close();
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+//            throw new RuntimeException(ex);
+        }
+        return list;
+    }
 }

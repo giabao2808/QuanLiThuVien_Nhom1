@@ -4,6 +4,7 @@
  */
 package com.qltv.dao;
 
+import static com.qltv.dao.SachDAO.SELECT_BY_LOAI;
 import com.qltv.entity.LoaiSach;
 import com.qltv.utils.XJdbc;
     import java.sql.ResultSet;
@@ -21,7 +22,7 @@ public class LoaiSachDAO {
     public String UPDATE_SQL = "update Loai set TenLoai = ? where MaLoai = ?";
     public String DELETE_SQL = "delete from Loai where MaLoai = ? ";
     public String SELECT_ALL = "select * from Loai";
-    
+    public String SELECT_BY_ID = "select MaLoai from Loai where TenLoai like N'?'";
     
     public void insert(LoaiSach entity){
         XJdbc.update(INSERT_SQL, 
@@ -48,7 +49,10 @@ public class LoaiSachDAO {
         return selectByName( SELECT_ID);
     }
     
-    
+    public int selectByLoai(String key) {
+        List<Integer> list = selectBy(SELECT_BY_ID, key);
+        return list.size() > 0 ? list.get(0) : null;
+    }
     
     protected ArrayList<LoaiSach> selectBySql(String sql, Object... args) {
         ArrayList<LoaiSach> list = new ArrayList<>();
@@ -85,7 +89,28 @@ public class LoaiSachDAO {
                 rs.getStatement().getConnection().close();
             }
         } catch (SQLException ex) {
-            System.out.println(ex);
+//            System.out.println(ex);
+                ex.printStackTrace();
+//            throw new RuntimeException(ex);
+        }
+        return list;
+    }
+    
+    protected ArrayList<Integer> selectBy(String sql, Object... args) {
+        ArrayList<Integer> list = new ArrayList<>();
+        try {
+            try {
+                rs = XJdbc.query(sql);
+                while (rs.next()) {
+                    int tenLoai = rs.getInt("MaLoai");
+                    list.add(tenLoai);
+                                    }
+            } finally {
+                rs.getStatement().getConnection().close();
+            }
+        } catch (SQLException ex) {
+//            System.out.println(ex);
+                ex.printStackTrace();
 //            throw new RuntimeException(ex);
         }
         return list;

@@ -625,9 +625,7 @@ public class QLChung extends javax.swing.JPanel {
 
     private void btnXoaNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaNCCActionPerformed
         // TODO add your handling code here:
-        if(XValidate.checkNullText(txtTenNCC)){
             deleteNCC();
-        }
     }//GEN-LAST:event_btnXoaNCCActionPerformed
 
     private void btnMoiNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiNCCActionPerformed
@@ -651,9 +649,7 @@ public class QLChung extends javax.swing.JPanel {
 
     private void btnXoaKSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaKSActionPerformed
         // TODO add your handling code here:
-        if(XValidate.checkNullText(txtTenNCC)){
             deleteKS();
-        }
     }//GEN-LAST:event_btnXoaKSActionPerformed
 
     private void btnMoiKSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiKSActionPerformed
@@ -677,9 +673,7 @@ public class QLChung extends javax.swing.JPanel {
 
     private void btnXoaLSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaLSActionPerformed
         // TODO add your handling code here:
-        if(XValidate.checkNullText(txtTenNCC)){
             deleteLS();
-        }
     }//GEN-LAST:event_btnXoaLSActionPerformed
 
     private void btnMoiLSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiLSActionPerformed

@@ -8,6 +8,7 @@ import static com.qltv.dao.SachDAO.rs;
 import com.qltv.entity.Sach;
 import com.qltv.entity.TacGia;
 import com.qltv.utils.XJdbc;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -16,10 +17,46 @@ import java.util.*;
  * @author Admin
  */
 public class TacGiaDAO {
+    
+    public static ResultSet  rs;
+    public static String INSERT_SQL = "insert into TacGia (TenTacGia, NamSinh, QueQuan, Hinh) values (?,?,?,?)";
+    public static String UPDATE_SQL = "update TacGia set TenTacGia = ?, NamSinh = ?, QueQuan = ?, Hinh = ? where MaTacGia = ?";
+    public static String DELETE_SQL = "delete from TacGia where MaTacGia = ?";
     public static String SELECT_ALL = "select * from TacGia";
+    public static String SELECT_BY_ID = "select * from TacGia where MaTacGia = ?";
+    
+    public void insert(TacGia entity){
+        XJdbc.update(INSERT_SQL, 
+                    entity.getTen(),
+                    entity.getNamsinh(),
+                    entity.getQuequan(),
+                    entity.getHinh());
+    }
+    
+    public void update(TacGia entity){
+        XJdbc.update(UPDATE_SQL, 
+                    entity.getTen(),
+                    entity.getNamsinh(),
+                    entity.getQuequan(),
+                    entity.getHinh(),
+                    entity.getMa());
+    }
+    
+    public void delete(int key) {
+        XJdbc.update(DELETE_SQL, key);
+    }
     
     public ArrayList<TacGia> SelectAll(){
         return SelectById(SELECT_ALL);
+    }
+    
+    public TacGia selectByIds(int id) {
+        List<TacGia> list = SelectById(SELECT_BY_ID, id);
+        if(list.isEmpty()){
+            return null;
+        }
+        return list.get(0);
+        
     }
     
     protected ArrayList<TacGia> SelectById(String sql, Object...args){
