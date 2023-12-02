@@ -36,5 +36,8 @@ public class NhaCungCap {
         this.tenNCC = tenNCC;
     }
     
-    
+    @Override
+    public String toString() {
+        return tenNCC;
+    }
 }

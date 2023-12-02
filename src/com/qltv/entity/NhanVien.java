@@ -16,6 +16,15 @@ public class NhanVien {
     public NhanVien() {
     }
 
+    public NhanVien(int ma, String ten) {
+        this.ten = ten;
+        this.ma = ma;
+    }
+
+    public NhanVien(String ten) {
+        this.ten = ten;
+    }
+    
     public NhanVien(String ten, String nam, String sdt, String diachi, int ma, boolean giotinh) {
         this.ten = ten;
         this.nam = nam;
@@ -73,5 +82,9 @@ public class NhanVien {
         this.giotinh = giotinh;
     }
     
+    @Override
+    public String toString(){
+        return ten;
+    }
     
 }

@@ -102,4 +102,62 @@ public class NhanVienDAO {
         }
         return list;
     }
+    
+//    public Integer selectNV(String id){
+//        String SELECT_BY_NCC_ID = "select MaNV from NhanVien where TenNV like '?'";
+//         List<Integer> list = selectByNV1(SELECT_BY_NCC_ID, id);
+//        if(!list.isEmpty()){
+//            return list.get(0);
+//        }
+//        else{
+//            return 0;
+//        }
+//    }
+//    
+//    protected ArrayList<Integer> selectByNV1(String sql, Object... args) {
+//    ArrayList<Integer> list = new ArrayList<>();
+//    try {
+//        try (ResultSet rs = XJdbc.query(sql, args)) {
+//            while (rs.next()) {
+//                int pn = rs.getInt(1);
+//                list.add(pn);
+//            }
+//        }
+//    } catch (SQLException ex) {
+//        // Xử lý ngoại lệ, bạn có thể ném một ngoại lệ hoặc ghi log
+//        // Nếu ném ngoại lệ, đảm bảo rằng ngoại lệ này được xử lý tại nơi gọi hàm
+//        ex.printStackTrace(); // Hoặc sử dụng logging framework như SLF4J để ghi log
+//    }
+//    return list;
+//}
+    
+    public int convertToMaNV(String tenNV) {
+    int maNV = 0;
+    try {
+        String sql = "SELECT MaNV FROM NhanVien WHERE TenNV = ?";
+        try (ResultSet resultSet = XJdbc.query(sql, tenNV)) {
+            if (resultSet.next()) {
+                maNV = resultSet.getInt("MaNV");
+            }
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return maNV;
+}
+
+public String convertToTenNV(int maNV) {
+    String tenNV = "";
+    try {
+        String sql = "SELECT TenNV FROM NhanVien WHERE MaNV = ?";
+        try (ResultSet resultSet = XJdbc.query(sql, maNV)) {
+            if (resultSet.next()) {
+                tenNV = resultSet.getString("TenNV");
+            }
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return tenNV;
+}
 }
