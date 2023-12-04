@@ -304,7 +304,7 @@ public class QLChung extends javax.swing.JPanel {
         lblTenNCC = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblNCC = new javax.swing.JTable();
-        txtNCC = new javax.swing.JTextField();
+        txtTenNCC = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -489,8 +489,8 @@ public class QLChung extends javax.swing.JPanel {
 
         pnlNCC.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 275, 701, 319));
 
-        txtNCC.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        pnlNCC.add(txtNCC, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 500, 50));
+        txtTenNCC.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        pnlNCC.add(txtTenNCC, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 500, 50));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
         jLabel3.setText("Tên nhà cung cấp");
@@ -612,6 +612,6 @@ public class QLChung extends javax.swing.JPanel {
     private javax.swing.JTable tblNCC;
     private javax.swing.JTextField txtKeSach;
     private javax.swing.JTextField txtLoai;
-    private javax.swing.JTextField txtNCC;
+    private javax.swing.JTextField txtTenNCC;
     // End of variables declaration//GEN-END:variables
 }
