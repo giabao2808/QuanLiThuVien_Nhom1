@@ -253,10 +253,10 @@ public class Form6 extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSanPhamMouseClicked
-        if (evt.getClickCount() == 1) {
-            this.row = tbSanPham.getSelectedRow();
-            this.edit();
-        }
+//        if (evt.getClickCount() == 1) {
+//            this.row = tbSanPham.getSelectedRow();
+//            this.edit();
+//        }
     }//GEN-LAST:event_tbSanPhamMouseClicked
 
 
