@@ -104,10 +104,10 @@ public class QLSach extends javax.swing.JPanel {
     }
     
     private void fillComboBoxNXB() {
-        cboNXB.removeAllItems();
+        cboKeSach.removeAllItems();
             List<String> data = nxbdao.selectById();
             for (String item : data) {
-                cboNXB.addItem(item);
+                cboKeSach.addItem(item);
         }
     }
     
@@ -118,7 +118,7 @@ public class QLSach extends javax.swing.JPanel {
                 txtMa.setText(tblSach.getValueAt(i, 0) + "");
                 txtTen.setText(tblSach.getValueAt(i, 1) + "");
                 cboLoai.setSelectedItem(tblSach.getValueAt(i, 2));
-                cboNXB.setSelectedItem(tblSach.getValueAt(i, 3));
+                cboKeSach.setSelectedItem(tblSach.getValueAt(i, 3));
                 cboTacGia.setSelectedItem(tblSach.getValueAt(i, 4));
                 txtNam.setText(tblSach.getValueAt(i, 5) + "");
                 txtSoLuong.setText(tblSach.getValueAt(i,6 )+ "");
@@ -195,7 +195,7 @@ public class QLSach extends javax.swing.JPanel {
         txtMa.setText(cd.getMa());
         txtTen.setText(cd.getTen());
         cboLoai.setSelectedItem(lsdao.selectByLoai(cd.getMaLoai()));
-        cboNXB.setSelectedItem(cd.getMaNXB());
+        cboKeSach.setSelectedItem(cd.getMaNXB());
         cboTacGia.setSelectedItem(cd.getMaTG());
         txtNam.setText(String.valueOf(cd.getNam()));
         txtSoLuong.setText(String.valueOf(cd.getSoluong()));
@@ -213,7 +213,7 @@ public class QLSach extends javax.swing.JPanel {
         s.setMa(txtMa.getText());
         s.setTen(txtTen.getText());
         s.setMaLoai(lsdao.selectByLoai(String.valueOf(cboLoai.getSelectedItem()))+"");
-        s.setMaNXB((String) cboNXB.getSelectedItem());
+        s.setMaNXB((String) cboKeSach.getSelectedItem());
         s.setMaTG((String) cboTacGia.getSelectedItem());
         s.setNam(Integer.parseInt(txtNam.getText()));
         s.setSoluong(Integer.parseInt(txtSoLuong.getText()));
@@ -291,29 +291,38 @@ public class QLSach extends javax.swing.JPanel {
         tabs = new javax.swing.JTabbedPane();
         pnlSach = new javax.swing.JPanel();
         lblAnh = new javax.swing.JLabel();
-        btnAnh = new com.qltv.swing.Button();
-        txtTen = new com.qltv.swing.TextField();
-        txtNam = new com.qltv.swing.TextField();
-        txtSoLuong = new com.qltv.swing.TextField();
-        btnSua = new com.qltv.swing.Button();
-        btnXoa = new com.qltv.swing.Button();
-        btnMoi = new com.qltv.swing.Button();
-        btnThem = new com.qltv.swing.Button();
         jLabel1 = new javax.swing.JLabel();
-        cboLoai = new com.qltv.swing.Combobox();
-        cboNXB = new com.qltv.swing.Combobox();
-        cboKeSach = new com.qltv.swing.Combobox();
-        cboTacGia = new com.qltv.swing.Combobox();
-        txtGhiChu = new com.qltv.swing.TextAreaScroll();
+        cboLoai = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        cboTacGia = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        cboKeSach = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        cboNXB1 = new javax.swing.JComboBox<>();
+        txtSoLuong = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtTen = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtNam = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtGhiChu = new javax.swing.JTextArea();
+        jLabel9 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         txtMa = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        txtTimKiem = new com.qltv.swing.TextField();
-        btnFirst = new com.qltv.swing.Button();
-        btnLast = new com.qltv.swing.Button();
-        btnNext = new com.qltv.swing.Button();
-        btnPre = new com.qltv.swing.Button();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblSach = new javax.swing.JTable();
+        jTextField4 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -334,133 +343,123 @@ public class QLSach extends javax.swing.JPanel {
                 lblAnhMouseClicked(evt);
             }
         });
-        pnlSach.add(lblAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 440, 440));
-
-        btnAnh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qltv/icon/camera.png"))); // NOI18N
-        btnAnh.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnAnh.setPreferredSize(new java.awt.Dimension(90, 50));
-        pnlSach.add(btnAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 550, -1, -1));
-
-        txtTen.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        txtTen.setLabelText("Tên sách");
-        txtTen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTenActionPerformed(evt);
-            }
-        });
-        pnlSach.add(txtTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 80, 570, -1));
-
-        txtNam.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        txtNam.setLabelText("Năm sản xuất");
-        pnlSach.add(txtNam, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 220, 270, 50));
-
-        txtSoLuong.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        txtSoLuong.setLabelText("Số lượng");
-        pnlSach.add(txtSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 290, 270, 50));
-
-        btnSua.setText("Cập nhật");
-        btnSua.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnSua.setPreferredSize(new java.awt.Dimension(90, 50));
-        btnSua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSuaActionPerformed(evt);
-            }
-        });
-        pnlSach.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 510, -1, -1));
-
-        btnXoa.setText("Xóa");
-        btnXoa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnXoa.setPreferredSize(new java.awt.Dimension(90, 50));
-        btnXoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaActionPerformed(evt);
-            }
-        });
-        pnlSach.add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 510, -1, -1));
-
-        btnMoi.setText("Mới");
-        btnMoi.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnMoi.setPreferredSize(new java.awt.Dimension(90, 50));
-        btnMoi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMoiActionPerformed(evt);
-            }
-        });
-        pnlSach.add(btnMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 510, -1, -1));
-
-        btnThem.setText("Thêm");
-        btnThem.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnThem.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btnThem.setPreferredSize(new java.awt.Dimension(90, 50));
-        btnThem.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        btnThem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThemActionPerformed(evt);
-            }
-        });
-        pnlSach.add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 510, -1, -1));
+        pnlSach.add(lblAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 440, 460));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 3, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(153, 102, 0));
         jLabel1.setText("SÁCH");
         pnlSach.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, -1, -1));
 
-        cboLoai.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        cboLoai.setLabeText("Loại sách");
+        cboLoai.setFont(new java.awt.Font("Segoe UI Semilight", 0, 12)); // NOI18N
+        cboLoai.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         cboLoai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboLoaiActionPerformed(evt);
             }
         });
-        pnlSach.add(cboLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 150, 270, -1));
+        pnlSach.add(cboLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 190, 260, 40));
 
-        cboNXB.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        cboNXB.setLabeText("Nhà xuất bản");
-        pnlSach.add(cboNXB, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 220, 270, 50));
+        jLabel2.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jLabel2.setText("Tên sách");
+        pnlSach.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 80, -1, -1));
 
-        cboKeSach.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        cboKeSach.setLabeText("Kệ sách");
-        pnlSach.add(cboKeSach, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 290, 270, 50));
+        cboTacGia.setFont(new java.awt.Font("Segoe UI Semilight", 0, 12)); // NOI18N
+        cboTacGia.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        cboTacGia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboTacGiaActionPerformed(evt);
+            }
+        });
+        pnlSach.add(cboTacGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 190, 260, 40));
 
-        cboTacGia.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        cboTacGia.setLabeText("Tác giả");
-        pnlSach.add(cboTacGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 150, 270, -1));
+        jLabel3.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jLabel3.setText("Tác giả");
+        pnlSach.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 170, -1, -1));
 
-        txtGhiChu.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        txtGhiChu.setLabelText("Ghi chú");
-        pnlSach.add(txtGhiChu, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 370, 570, 80));
+        jLabel4.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jLabel4.setText("Ghi chú");
+        pnlSach.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 450, -1, -1));
 
-        txtMa.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        txtMa.setForeground(new java.awt.Color(153, 153, 153));
-        txtMa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtMa.setText("Mã");
-        pnlSach.add(txtMa, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, -1, -1));
+        cboKeSach.setFont(new java.awt.Font("Segoe UI Semilight", 0, 12)); // NOI18N
+        cboKeSach.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        cboKeSach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboKeSachActionPerformed(evt);
+            }
+        });
+        pnlSach.add(cboKeSach, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 280, 260, 40));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jLabel5.setText("Kệ sách");
+        pnlSach.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 260, -1, -1));
+
+        cboNXB1.setFont(new java.awt.Font("Segoe UI Semilight", 0, 12)); // NOI18N
+        cboNXB1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        cboNXB1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboNXB1ActionPerformed(evt);
+            }
+        });
+        pnlSach.add(cboNXB1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 280, 260, 40));
+
+        txtSoLuong.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        pnlSach.add(txtSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 380, 260, 40));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jLabel6.setText("Loại sách");
+        pnlSach.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 170, -1, -1));
+
+        txtTen.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        pnlSach.add(txtTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 100, 570, 40));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jLabel7.setText("Nhà xuất bản");
+        pnlSach.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 260, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jLabel8.setText("Năm xuất bản");
+        pnlSach.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 360, -1, -1));
+
+        txtNam.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        pnlSach.add(txtNam, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 380, 260, 40));
+
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+
+        txtGhiChu.setColumns(20);
+        txtGhiChu.setRows(5);
+        jScrollPane1.setViewportView(txtGhiChu);
+
+        pnlSach.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 470, 570, 70));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jLabel9.setText("Số lượng");
+        pnlSach.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 360, -1, -1));
+
+        jButton1.setBackground(new java.awt.Color(204, 153, 0));
+        jButton1.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jButton1.setText("Sửa");
+        pnlSach.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 580, -1, -1));
+
+        jButton2.setBackground(new java.awt.Color(204, 153, 0));
+        jButton2.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jButton2.setText("Xóa");
+        pnlSach.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 580, -1, -1));
+
+        jButton3.setBackground(new java.awt.Color(204, 153, 0));
+        jButton3.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jButton3.setText("Mới");
+        pnlSach.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 580, -1, -1));
+
+        jButton4.setBackground(new java.awt.Color(204, 153, 0));
+        jButton4.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jButton4.setText("Thêm");
+        pnlSach.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 580, -1, -1));
+        pnlSach.add(txtMa, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 550, -1, -1));
 
         tabs.addTab("THÔNG TIN", pnlSach);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtTimKiem.setForeground(new java.awt.Color(153, 102, 0));
-        txtTimKiem.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        txtTimKiem.setLabelText("Tìm kiếm");
-        jPanel2.add(txtTimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(359, 21, 415, -1));
-
-        btnFirst.setText("|<");
-        btnFirst.setPreferredSize(new java.awt.Dimension(60, 41));
-        jPanel2.add(btnFirst, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 100, -1, -1));
-
-        btnLast.setText(">|");
-        btnLast.setPreferredSize(new java.awt.Dimension(60, 41));
-        jPanel2.add(btnLast, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 100, -1, -1));
-
-        btnNext.setText(">>");
-        btnNext.setPreferredSize(new java.awt.Dimension(60, 41));
-        jPanel2.add(btnNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 100, -1, -1));
-
-        btnPre.setText("<<");
-        btnPre.setPreferredSize(new java.awt.Dimension(60, 41));
-        jPanel2.add(btnPre, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 100, -1, -1));
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Times New Roman", 0, 14), new java.awt.Color(153, 102, 0))); // NOI18N
         jScrollPane2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -493,7 +492,39 @@ public class QLSach extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tblSach);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 1020, 400));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 1020, 400));
+
+        jTextField4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jPanel2.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 350, 40));
+
+        jLabel10.setText("Tìm kiếm");
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, -1, -1));
+
+        jButton5.setBackground(new java.awt.Color(204, 153, 0));
+        jButton5.setText("<<");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 120, -1, -1));
+
+        jButton6.setBackground(new java.awt.Color(204, 153, 0));
+        jButton6.setText(">>");
+        jPanel2.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 120, -1, -1));
+
+        jButton7.setBackground(new java.awt.Color(204, 153, 0));
+        jButton7.setText(">|");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 120, -1, -1));
+
+        jButton8.setBackground(new java.awt.Color(204, 153, 0));
+        jButton8.setText("|<");
+        jPanel2.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 120, -1, -1));
 
         tabs.addTab("DANH SÁCH", jPanel2);
 
@@ -513,71 +544,75 @@ public class QLSach extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtTenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenActionPerformed
+    private void lblAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnhMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtTenActionPerformed
+        selectIcon();
+    }//GEN-LAST:event_lblAnhMouseClicked
+
+    private void cboLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboLoaiActionPerformed
+    }//GEN-LAST:event_cboLoaiActionPerformed
+
+    private void cboTacGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTacGiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboTacGiaActionPerformed
+
+    private void cboKeSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboKeSachActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboKeSachActionPerformed
+
+    private void cboNXB1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboNXB1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboNXB1ActionPerformed
 
     private void tblSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSachMouseClicked
         // TODO add your handling code here:
         clickTableSach();
     }//GEN-LAST:event_tblSachMouseClicked
 
-    private void cboLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboLoaiActionPerformed
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cboLoaiActionPerformed
+    }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void lblAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnhMouseClicked
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        selectIcon();
-    }//GEN-LAST:event_lblAnhMouseClicked
-
-    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        // TODO add your handling code here:
-        insert();
-    }//GEN-LAST:event_btnThemActionPerformed
-
-    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        // TODO add your handling code here:
-        update();
-    }//GEN-LAST:event_btnSuaActionPerformed
-
-    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        // TODO add your handling code here:
-        delete();
-    }//GEN-LAST:event_btnXoaActionPerformed
-
-    private void btnMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiActionPerformed
-        // TODO add your handling code here:
-        clearForm();
-    }//GEN-LAST:event_btnMoiActionPerformed
+    }//GEN-LAST:event_jButton7ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.qltv.swing.Button btnAnh;
-    private com.qltv.swing.Button btnFirst;
-    private com.qltv.swing.Button btnLast;
-    private com.qltv.swing.Button btnMoi;
-    private com.qltv.swing.Button btnNext;
-    private com.qltv.swing.Button btnPre;
-    private com.qltv.swing.Button btnSua;
-    private com.qltv.swing.Button btnThem;
-    private com.qltv.swing.Button btnXoa;
-    private com.qltv.swing.Combobox cboKeSach;
-    private com.qltv.swing.Combobox cboLoai;
-    private com.qltv.swing.Combobox cboNXB;
-    private com.qltv.swing.Combobox cboTacGia;
+    private javax.swing.JComboBox<String> cboKeSach;
+    private javax.swing.JComboBox<String> cboLoai;
+    private javax.swing.JComboBox<String> cboNXB1;
+    private javax.swing.JComboBox<String> cboTacGia;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextField4;
     private javax.swing.JLabel lblAnh;
     private javax.swing.JPanel pnlSach;
     private javax.swing.JTabbedPane tabs;
     private javax.swing.JTable tblSach;
-    private com.qltv.swing.TextAreaScroll txtGhiChu;
+    private javax.swing.JTextArea txtGhiChu;
     private javax.swing.JTextField txtMa;
-    private com.qltv.swing.TextField txtNam;
-    private com.qltv.swing.TextField txtSoLuong;
-    private com.qltv.swing.TextField txtTen;
-    private com.qltv.swing.TextField txtTimKiem;
+    private javax.swing.JTextField txtNam;
+    private javax.swing.JTextField txtSoLuong;
+    private javax.swing.JTextField txtTen;
     // End of variables declaration//GEN-END:variables
 }
