@@ -145,40 +145,29 @@ public class QLNhaXuatBan extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtDiaChi = new com.qltv.swing.TextField();
-        txtSDT = new com.qltv.swing.TextField();
-        txtTen = new com.qltv.swing.TextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblDSNXB = new javax.swing.JTable();
-        button1 = new com.qltv.swing.Button();
-        button2 = new com.qltv.swing.Button();
-        button3 = new com.qltv.swing.Button();
-        button4 = new com.qltv.swing.Button();
-        textField4 = new com.qltv.swing.TextField();
         jLabel1 = new javax.swing.JLabel();
         lblAnh = new javax.swing.JLabel();
-        button5 = new com.qltv.swing.Button();
+        txtTen = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtDiaChi = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtSDT = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtTen3 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jButton20 = new javax.swing.JButton();
+        jButton17 = new javax.swing.JButton();
+        jButton18 = new javax.swing.JButton();
+        jButton19 = new javax.swing.JButton();
+        jButton21 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtDiaChi.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        txtDiaChi.setLabelText("Địa chỉ");
-        add(txtDiaChi, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 270, 50));
-
-        txtSDT.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        txtSDT.setLabelText("Số điện thoại");
-        add(txtSDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 270, 270, 50));
-
-        txtTen.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        txtTen.setLabelText("Tên nhà sản xuất");
-        txtTen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTenActionPerformed(evt);
-            }
-        });
-        add(txtTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 270, 50));
-
+        tblDSNXB.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
         tblDSNXB.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -205,84 +194,82 @@ public class QLNhaXuatBan extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tblDSNXB);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, 410, 420));
-
-        button1.setText("Cập nhật");
-        button1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        button1.setPreferredSize(new java.awt.Dimension(90, 50));
-        button1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
-            }
-        });
-        add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 510, -1, -1));
-
-        button2.setText("Mới");
-        button2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        button2.setPreferredSize(new java.awt.Dimension(90, 50));
-        button2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button2ActionPerformed(evt);
-            }
-        });
-        add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 510, -1, -1));
-
-        button3.setText("Xóa");
-        button3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        button3.setPreferredSize(new java.awt.Dimension(90, 50));
-        button3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button3ActionPerformed(evt);
-            }
-        });
-        add(button3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 510, -1, -1));
-
-        button4.setText("Xóa ảnh");
-        button4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        button4.setPreferredSize(new java.awt.Dimension(90, 50));
-        add(button4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 420, -1, -1));
-
-        textField4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        textField4.setLabelText("Tìm kiếm");
-        textField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField4ActionPerformed(evt);
-            }
-        });
-        add(textField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 100, 410, -1));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 190, 410, 420));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 3, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(153, 102, 0));
         jLabel1.setText("NHÀ XUẤT BẢN");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, -1, -1));
 
-        lblAnh.setText("jLabel2");
         lblAnh.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lblAnh.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblAnhMouseClicked(evt);
             }
         });
-        add(lblAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 220, 280));
+        add(lblAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 220, 280));
 
-        button5.setText("Thêm");
-        button5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        button5.setPreferredSize(new java.awt.Dimension(90, 50));
-        button5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button5ActionPerformed(evt);
-            }
-        });
-        add(button5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 510, -1, -1));
+        txtTen.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        txtTen.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        add(txtTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 290, 40));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jLabel2.setText("Tên nhà xuất bản");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 130, -1, -1));
+
+        txtDiaChi.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        txtDiaChi.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        add(txtDiaChi, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 290, 40));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jLabel3.setText("Địa chỉ");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, -1, -1));
+
+        txtSDT.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        txtSDT.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        add(txtSDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, 290, 40));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jLabel4.setText("Số điện thoại");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 300, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jLabel5.setText("Tên nhà xuất bản");
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 110, 210, -1));
+
+        txtTen3.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        txtTen3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        add(txtTen3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 130, 410, 40));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jLabel6.setText("Ảnh");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
+
+        jButton20.setBackground(new java.awt.Color(204, 153, 0));
+        jButton20.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jButton20.setText("Xóa ảnh");
+        add(jButton20, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 460, -1, -1));
+
+        jButton17.setBackground(new java.awt.Color(204, 153, 0));
+        jButton17.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jButton17.setText("Sửa");
+        add(jButton17, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 560, -1, -1));
+
+        jButton18.setBackground(new java.awt.Color(204, 153, 0));
+        jButton18.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jButton18.setText("Xóa");
+        add(jButton18, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 560, -1, -1));
+
+        jButton19.setBackground(new java.awt.Color(204, 153, 0));
+        jButton19.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jButton19.setText("Mới");
+        add(jButton19, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 560, -1, -1));
+
+        jButton21.setBackground(new java.awt.Color(204, 153, 0));
+        jButton21.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jButton21.setText("Thêm");
+        add(jButton21, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 560, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtTenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTenActionPerformed
-
-    private void textField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textField4ActionPerformed
 
     private void tblDSNXBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDSNXBMouseClicked
         // TODO add your handling code here:
@@ -296,40 +283,25 @@ public class QLNhaXuatBan extends javax.swing.JPanel {
         selectIcon();
     }//GEN-LAST:event_lblAnhMouseClicked
 
-    private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
-        // TODO add your handling code here:
-        insert();
-    }//GEN-LAST:event_button5ActionPerformed
-
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        // TODO add your handling code here:
-        this.updateNXB();
-    }//GEN-LAST:event_button1ActionPerformed
-
-    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
-        // TODO add your handling code here:
-        this.delete();
-    }//GEN-LAST:event_button3ActionPerformed
-
-    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
-        // TODO add your handling code here:
-        this.clearForm();
-    }//GEN-LAST:event_button2ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.qltv.swing.Button button1;
-    private com.qltv.swing.Button button2;
-    private com.qltv.swing.Button button3;
-    private com.qltv.swing.Button button4;
-    private com.qltv.swing.Button button5;
+    private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton19;
+    private javax.swing.JButton jButton20;
+    private javax.swing.JButton jButton21;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAnh;
     private javax.swing.JTable tblDSNXB;
-    private com.qltv.swing.TextField textField4;
-    private com.qltv.swing.TextField txtDiaChi;
-    private com.qltv.swing.TextField txtSDT;
-    private com.qltv.swing.TextField txtTen;
+    private javax.swing.JTextField txtDiaChi;
+    private javax.swing.JTextField txtSDT;
+    private javax.swing.JTextField txtTen;
+    private javax.swing.JTextField txtTen3;
     // End of variables declaration//GEN-END:variables
 }

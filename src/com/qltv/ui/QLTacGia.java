@@ -7,6 +7,7 @@ package com.qltv.ui;
 
 import com.qltv.dao.TacGiaDAO;
 import com.qltv.entity.TacGia;
+import com.qltv.utils.Auth;
 import com.qltv.utils.MsgBox;
 import com.qltv.utils.XImage;
 import java.awt.Image;
@@ -37,6 +38,8 @@ public class QLTacGia extends javax.swing.JPanel {
         initComponents();
         this.fillTable();
         viewTable();
+        lblTen.setText("Tên đăng nhập: " + Auth.user.getUser());
+            lblChucVu.setText("Chức vụ: " + String.valueOf(Auth.user.isQuyen() ? "Nhân viên" : "Quản lý"));
     }
 
     
@@ -200,6 +203,9 @@ public class QLTacGia extends javax.swing.JPanel {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        lblChucVu = new javax.swing.JLabel();
+        lblTen = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -236,12 +242,12 @@ public class QLTacGia extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tblTacGia);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 150, 370, 460));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 190, 370, 430));
 
         lblTacGia.setFont(new java.awt.Font("Times New Roman", 3, 36)); // NOI18N
         lblTacGia.setForeground(new java.awt.Color(153, 102, 0));
         lblTacGia.setText("TÁC GIẢ");
-        add(lblTacGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, -1, -1));
+        add(lblTacGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 80, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -278,14 +284,14 @@ public class QLTacGia extends javax.swing.JPanel {
         jLabel4.setText("Ảnh");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 630, 400));
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 630, 400));
 
         txtTim.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        add(txtTim, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 100, 370, 30));
+        add(txtTim, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 150, 370, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
         jLabel5.setText("Thông tin");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 100, -1));
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 100, -1));
 
         jButton1.setBackground(new java.awt.Color(153, 102, 0));
         jButton1.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
@@ -295,26 +301,39 @@ public class QLTacGia extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 570, 90, 30));
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 600, 90, 30));
 
         jButton2.setBackground(new java.awt.Color(153, 102, 0));
         jButton2.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
         jButton2.setText("Xóa");
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 570, 90, 30));
+        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 600, 90, 30));
 
         jButton3.setBackground(new java.awt.Color(153, 102, 0));
         jButton3.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
         jButton3.setText("Mới");
-        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 570, 90, 30));
+        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 600, 90, 30));
 
         jButton4.setBackground(new java.awt.Color(153, 102, 0));
         jButton4.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
         jButton4.setText("Thêm");
-        add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 570, 90, 30));
+        add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 600, 90, 30));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
         jLabel6.setText("Tìm kiếm");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 80, 230, -1));
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 130, 230, -1));
+
+        jPanel2.setBackground(new java.awt.Color(153, 102, 0));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblChucVu.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
+        lblChucVu.setText("Chức vụ: ");
+        jPanel2.add(lblChucVu, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 20, -1, -1));
+
+        lblTen.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
+        lblTen.setText("Tên đăng nhập:");
+        jPanel2.add(lblTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 20, -1, -1));
+
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 56));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -339,9 +358,12 @@ public class QLTacGia extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblChucVu;
     private javax.swing.JLabel lblHinh;
     private javax.swing.JLabel lblTacGia;
+    private javax.swing.JLabel lblTen;
     private javax.swing.JTable tblTacGia;
     private javax.swing.JTextField txtNamSinh;
     private javax.swing.JTextField txtQueQuan;

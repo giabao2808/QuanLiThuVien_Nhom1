@@ -64,14 +64,14 @@ public class Form_Home extends javax.swing.JPanel {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI Semilight", 3, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 51, 0));
         jLabel3.setText("BEAUTIFUL");
 
-        lblTen.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
+        lblTen.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
         lblTen.setText("Tên đăng nhập:");
 
-        lblChucVu.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
+        lblChucVu.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
         lblChucVu.setText("Chức vụ: ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

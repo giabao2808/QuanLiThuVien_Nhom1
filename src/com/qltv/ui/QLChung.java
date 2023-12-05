@@ -296,20 +296,20 @@ public class QLChung extends javax.swing.JPanel {
         tblKeSach = new javax.swing.JTable();
         txtKeSach = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
+        jButton14 = new javax.swing.JButton();
+        jButton15 = new javax.swing.JButton();
+        jButton16 = new javax.swing.JButton();
         pnlNCC = new javax.swing.JPanel();
         lblTenNCC = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblNCC = new javax.swing.JTable();
         txtTenNCC = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        jButton17 = new javax.swing.JButton();
+        jButton18 = new javax.swing.JButton();
+        jButton19 = new javax.swing.JButton();
+        jButton20 = new javax.swing.JButton();
 
         pnlChung.setBackground(new java.awt.Color(255, 255, 255));
         pnlChung.setPreferredSize(new java.awt.Dimension(1100, 650));
@@ -426,30 +426,25 @@ public class QLChung extends javax.swing.JPanel {
         jLabel2.setText("Vị trí");
         pnlKeSach.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 110, -1, -1));
 
-        jButton9.setBackground(new java.awt.Color(204, 153, 0));
-        jButton9.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
-        jButton9.setText("Thêm");
-        pnlKeSach.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, -1, -1));
+        jButton13.setBackground(new java.awt.Color(204, 153, 0));
+        jButton13.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jButton13.setText("Sửa");
+        pnlKeSach.add(jButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 210, -1, -1));
 
-        jButton10.setBackground(new java.awt.Color(204, 153, 0));
-        jButton10.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
-        jButton10.setText("Sửa");
-        pnlKeSach.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 210, -1, -1));
+        jButton14.setBackground(new java.awt.Color(204, 153, 0));
+        jButton14.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jButton14.setText("Xóa");
+        pnlKeSach.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 210, -1, -1));
 
-        jButton11.setBackground(new java.awt.Color(204, 153, 0));
-        jButton11.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
-        jButton11.setText("Xóa");
-        pnlKeSach.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 210, -1, -1));
+        jButton15.setBackground(new java.awt.Color(204, 153, 0));
+        jButton15.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jButton15.setText("Mới");
+        pnlKeSach.add(jButton15, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 210, -1, -1));
 
-        jButton12.setBackground(new java.awt.Color(204, 153, 0));
-        jButton12.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
-        jButton12.setText("Mới");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
-            }
-        });
-        pnlKeSach.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 210, -1, -1));
+        jButton16.setBackground(new java.awt.Color(204, 153, 0));
+        jButton16.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jButton16.setText("Thêm");
+        pnlKeSach.add(jButton16, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 210, -1, -1));
 
         tabs.addTab("KỆ SÁCH", pnlKeSach);
 
@@ -496,30 +491,25 @@ public class QLChung extends javax.swing.JPanel {
         jLabel3.setText("Tên nhà cung cấp");
         pnlNCC.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 110, -1, -1));
 
-        jButton5.setBackground(new java.awt.Color(204, 153, 0));
-        jButton5.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
-        jButton5.setText("Sửa");
-        pnlNCC.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 210, -1, -1));
+        jButton17.setBackground(new java.awt.Color(204, 153, 0));
+        jButton17.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jButton17.setText("Sửa");
+        pnlNCC.add(jButton17, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 210, -1, -1));
 
-        jButton6.setBackground(new java.awt.Color(204, 153, 0));
-        jButton6.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
-        jButton6.setText("Xóa");
-        pnlNCC.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 210, -1, -1));
+        jButton18.setBackground(new java.awt.Color(204, 153, 0));
+        jButton18.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jButton18.setText("Xóa");
+        pnlNCC.add(jButton18, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 210, -1, -1));
 
-        jButton7.setBackground(new java.awt.Color(204, 153, 0));
-        jButton7.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
-        jButton7.setText("Mới");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-        pnlNCC.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 210, -1, -1));
+        jButton19.setBackground(new java.awt.Color(204, 153, 0));
+        jButton19.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jButton19.setText("Mới");
+        pnlNCC.add(jButton19, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 210, -1, -1));
 
-        jButton8.setBackground(new java.awt.Color(204, 153, 0));
-        jButton8.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
-        jButton8.setText("Thêm");
-        pnlNCC.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 210, -1, -1));
+        jButton20.setBackground(new java.awt.Color(204, 153, 0));
+        jButton20.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        jButton20.setText("Thêm");
+        pnlNCC.add(jButton20, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 210, -1, -1));
 
         tabs.addTab("NHÀ CUNG CẤP", pnlNCC);
 
@@ -550,23 +540,12 @@ public class QLChung extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLoaiMouseClicked
-        // TODO add your handling code here:
-        if(evt.getClickCount() == 1){
-        clickTableLoai();
-        }
-    }//GEN-LAST:event_tblLoaiMouseClicked
-
     private void tblNCCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNCCMouseClicked
         // TODO add your handling code here:
         if(evt.getClickCount() == 1){
             clickTableNCC();
         }
     }//GEN-LAST:event_tblNCCMouseClicked
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
 
     private void tblKeSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKeSachMouseClicked
         // TODO add your handling code here:
@@ -575,24 +554,27 @@ public class QLChung extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tblKeSachMouseClicked
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+    private void tblLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLoaiMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton12ActionPerformed
+        if(evt.getClickCount() == 1){
+            clickTableLoai();
+        }
+    }//GEN-LAST:event_tblLoaiMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
